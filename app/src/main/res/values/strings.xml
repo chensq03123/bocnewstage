@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BOCP</string>
+    <string name="app_title">BOC+</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="fragment_one">交易历史</string>
+    <string name="fragment_two">理财产品</string>
+    <string name="fragment_three">众筹信息</string>
+    <string name="rmb">￥</string>
+</resources>
