@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="bocopAndroidSDK">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/libs/bocopAndroidSDK.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

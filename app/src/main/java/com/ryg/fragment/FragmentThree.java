@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.hustunique.bocp.R;
 
-public class FragmentThree extends BaseFragment {
+public class FragmentThree extends Fragment {
 
     public FragmentThree() {
         super();
@@ -17,6 +17,7 @@ public class FragmentThree extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
+
     }
 
 }

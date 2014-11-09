@@ -8,5 +8,11 @@
     <string name="fragment_one">交易历史</string>
     <string name="fragment_two">理财产品</string>
     <string name="fragment_three">众筹信息</string>
+    <string name="accinfo_cm">银行卡管理</string>
+    <string name="accinfo_pm">密码管理</string>
+    <string name="accinfo_tl">交易额度</string>
+    <string name="accinfo_ra">余额提醒</string>
     <string name="rmb">￥</string>
+    <string name="title_activity_login">LoginActivity</string>
+
 </resources>

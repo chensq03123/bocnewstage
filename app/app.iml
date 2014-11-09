@@ -62,6 +62,10 @@
     <orderEntry type="jdk" jdkName="Android API 20 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="android-support-v4" level="project" />
+    <orderEntry type="library" exported="" name="bocopAndroidSDK" level="project" />
+    <orderEntry type="library" exported="" name="fastjson-1.1.22" level="project" />
+    <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
+    <orderEntry type="library" exported="" name="CFCA_SIP_1.8.6.1" level="project" />
     <orderEntry type="library" exported="" name="android-support-v7-appcompat" level="project" />
   </component>
 </module>
