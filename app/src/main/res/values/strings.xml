@@ -14,5 +14,10 @@
     <string name="accinfo_ra">余额提醒</string>
     <string name="rmb">￥</string>
     <string name="title_activity_login">LoginActivity</string>
-
+    <string name="setting">设置</string>
+    <string name="str_card">银行卡</string>
+    <string name="strpasswd">密码</string>
+    <string name="str_chgestpsw">对手势密码进行修改</string>
+    <string name="str_tradelimit">交易额度</string>
+    <string name="str_remaintip">余额提醒</string>
 </resources>
