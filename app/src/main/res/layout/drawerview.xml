@@ -27,6 +27,14 @@
           android:layout_gravity="bottom"
            />
   </FrameLayout>
-
-
+   <ListView
+       android:id="@+id/drawermenulist"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       </ListView>
+    <ListView
+        android:id="@+id/drawerarrylist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        </ListView>
 </LinearLayout>

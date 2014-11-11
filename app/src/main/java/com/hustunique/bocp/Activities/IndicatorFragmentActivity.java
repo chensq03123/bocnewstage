@@ -110,8 +110,6 @@ public abstract class IndicatorFragmentActivity extends FragmentActivity impleme
         setContentView(getMainViewResId());
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
-                GravityCompat.START);
         mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View view, float v) {
