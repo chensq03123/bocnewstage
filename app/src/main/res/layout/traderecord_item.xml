@@ -49,6 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
+                    android:textColor="@android:color/black"
                     android:textSize="24sp"
                     android:text="@string/rmb"/>
                     <TextView
@@ -56,6 +57,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
                         android:text="30.00"
+                        android:textColor="@android:color/black"
                         android:textSize="24sp"/>
                     </LinearLayout>
 
@@ -108,4 +110,10 @@
 
 
         </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#e0e0e0"
+            android:layout_marginLeft="2dp"
+            />
 </LinearLayout>

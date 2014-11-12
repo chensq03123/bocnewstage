@@ -25,6 +25,13 @@
             android:label="@string/title_activity_login" >
 
         </activity>
+
+        <activity
+            android:name=".Activities.AccountSettingActivity"
+            android:label="@string/title_activity_login" >
+
+        </activity>
+
     </application>
 
 </manifest>

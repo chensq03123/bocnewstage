@@ -90,6 +90,15 @@
                 android:layout_weight="1"
                 android:duplicateParentState="true" />
         </LinearLayout>
+        <ImageView
+            android:id="@+id/main_addbtn"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="bottom|right"
+            android:src="@drawable/add_btn"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            />
     </FrameLayout>
 
     <!--<ListView
