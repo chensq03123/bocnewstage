@@ -20,4 +20,16 @@
     <string name="str_chgestpsw">对手势密码进行修改</string>
     <string name="str_tradelimit">交易额度</string>
     <string name="str_remaintip">余额提醒</string>
+
+
+
+
+    <string name="cancel">取消</string>
+    <string name="try_again">重试</string>
+    <string name="goon">继续</string>
+    <string name="confirm">确认</string>
+    <string name="lockpattern_recording_incorrect_too_short">"至少连接4个点，请重试"</string>
+    <string name="lockpattern_error">"手势密码不对"</string><!-- Accessibility description sent when user starts drawing a lock pattern. [CHAR LIMIT=NONE] --><string name="lockscreen_access_pattern_start">Pattern started</string><!-- Accessibility description sent when the pattern times out and is cleared. [CHAR LIMIT=NONE] --><string name="lockscreen_access_pattern_cleared">Pattern cleared</string><!-- Accessibility description sent when user adds a cell to the pattern. [CHAR LIMIT=NONE] --><string name="lockscreen_access_pattern_cell_added">Cell added</string><!-- Accessibility description sent when user completes drawing a pattern. [CHAR LIMIT=NONE] -->
+    <string name="lockscreen_access_pattern_detected">Pattern completed</string>
+
 </resources>

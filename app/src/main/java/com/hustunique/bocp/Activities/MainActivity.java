@@ -1,76 +1,65 @@
 package com.hustunique.bocp.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.view.Menu;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import com.hustunique.bocp.Adapters.Drawermenuadapter;
+import android.view.View.OnClickListener;
 import com.hustunique.bocp.R;
-import com.hustunique.bocp.Utils.Constants;
-import com.hustunique.bocp.Fragments.FragmentOne;
-import com.hustunique.bocp.Fragments.FragmentThree;
-import com.hustunique.bocp.Fragments.FragmentTwo;
+import com.hustunique.bocp.Utils.gesturepasswd.LockActivity;
+import com.hustunique.bocp.Utils.gesturepasswd.LockSetupActivity;
+/*
+ * Author: Ruils 心怀产品梦的安卓码农 
+ * Blog: http://blog.csdn.net/ruils
+ * QQ: 5452781
+ * Email: 5452781@qq.com
+ */
 
-import java.util.List;
+public class MainActivity extends Activity implements OnClickListener {
+    // 12-01 18:26:09.907: I/ActivityManager(519): Displayed
+    // com.android.settings/.ChooseLockPattern: +236ms
+    // 12-01 19:35:14.870: I/ActivityManager(519): Displayed
+    // com.android.settings/.ConfirmLockPattern: +366ms (total +439ms)
 
-public class MainActivity extends IndicatorFragmentActivity {
+    private static final String TAG = "MainActivity";
 
-    public static final int FRAGMENT_ONE = 0;
-    public static final int FRAGMENT_TWO = 1;
-    public static final int FRAGMENT_THREE = 2;
+    public static final String LOCK = "lock";
+    public static final String LOCK_KEY = "lock_key";
 
-    private ListView drawerlistmenu,drawerarraylist;
-    private ImageView mainaddbtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     mainaddbtn=(ImageView)findViewById(R.id.main_addbtn);
-     drawerlistmenu=(ListView)findViewById(R.id.drawermenulist);
-     drawerarraylist=(ListView)findViewById(R.id.drawerarrylist);
-        Drawermenuadapter drawermenuadapter=new Drawermenuadapter(MainActivity.this, Constants.menuitem);
-      drawerlistmenu.setAdapter(drawermenuadapter);
+        setContentView(R.layout.activity_main);
 
-      drawerlistmenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-          @Override
-          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-              switch (position){
-                  case 0:break;
-                  case 1:toAccsettingactivity();break;
-                  case 2:break;
-              }
-          }
-      });
+        SharedPreferences preferences = getSharedPreferences(LOCK, MODE_PRIVATE);
 
-        mainaddbtn.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-         }
-     });
+        String lockPattenString = preferences.getString(LOCK_KEY, null);
 
+        if (lockPattenString != null) {
+            Intent intent = new Intent(this, LockActivity.class);
+            startActivity(intent);
+
+        }
 
     }
 
     @Override
-    protected int supplyTabs(List<TabInfo> tabs) {
-        tabs.add(new TabInfo(FRAGMENT_ONE, getString(R.string.fragment_one),
-                FragmentOne.class));
-        tabs.add(new TabInfo(FRAGMENT_TWO, getString(R.string.fragment_two),
-                FragmentTwo.class));
-        tabs.add(new TabInfo(FRAGMENT_THREE, getString(R.string.fragment_three),
-                FragmentThree.class));
+    public void onClick(View v) {
+        switch (v.getId()) {
+        case R.id.lock:
+            Intent intent = new Intent(this, LockSetupActivity.class);
+            startActivity(intent);
+            break;
+        case R.id.unlock:
+            getSharedPreferences(LOCK, MODE_PRIVATE).edit().clear().commit();
+            break;
 
-        return FRAGMENT_TWO;
-    }
+        default:
+            break;
+        }
 
-    private void toAccsettingactivity(){
-        Intent intent=new Intent(MainActivity.this,AccountSettingActivity.class);
-        startActivity(intent);
     }
 
 }
