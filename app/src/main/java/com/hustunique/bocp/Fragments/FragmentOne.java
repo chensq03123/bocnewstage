@@ -34,7 +34,7 @@ public class FragmentOne extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mMainView = inflater.inflate(R.layout.fragment_one, container, false);
+        mMainView = inflater.inflate(R.layout.fragment_traderecord, container, false);
 
         mlistItems = new ArrayList<Map<String,String>>();
         for (int i = 0; i < 20; i++) {

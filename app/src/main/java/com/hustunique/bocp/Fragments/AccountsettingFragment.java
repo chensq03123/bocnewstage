@@ -29,7 +29,7 @@ public class AccountsettingFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.accountinfo_layout,null);
+        View view=inflater.inflate(R.layout.layout_accountinfo,null);
         return view;
     }
 }

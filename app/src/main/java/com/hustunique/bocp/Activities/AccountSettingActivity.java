@@ -17,7 +17,7 @@ public class AccountSettingActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.accountsettinglayout);
+        setContentView(R.layout.layout_accountsetting);
         AccountsettingFragment asfragment=new AccountsettingFragment();
         FragmentManager fragmentManager=getFragmentManager();
         FragmentTransaction transaction=fragmentManager.beginTransaction();

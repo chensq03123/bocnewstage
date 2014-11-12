@@ -1,7 +1,6 @@
 package com.hustunique.bocp.Adapters;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +47,7 @@ public class TradeRecordBaseAdapter extends BaseAdapter {
         ViewHolder mholder;
         if(convertView==null){
             mholder=new ViewHolder();
-            convertView=(LinearLayout)LayoutInflater.from(mcontext).inflate(R.layout.traderecord_item,null);
+            convertView=(LinearLayout)LayoutInflater.from(mcontext).inflate(R.layout.item_traderecord,null);
             convertView.setTag(mholder);
         }else{
             mholder=(ViewHolder)convertView.getTag();

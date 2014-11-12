@@ -1,8 +1,6 @@
 package com.hustunique.bocp.Adapters;
 
 import android.content.Context;
-import android.media.Image;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +43,7 @@ public class Drawermenuadapter extends BaseAdapter {
         ViewHolder holder;
         if(convertView==null){
             holder=new ViewHolder();
-             convertView= LayoutInflater.from(mcontext).inflate(R.layout.drawerlist_item,null);
+             convertView= LayoutInflater.from(mcontext).inflate(R.layout.item_drawerlist,null);
             holder.mimg=(ImageView)convertView.findViewById(R.id.draweritemimg);
             holder.mt=(TextView)convertView.findViewById(R.id.draweritemtext);
             convertView.setTag(holder);

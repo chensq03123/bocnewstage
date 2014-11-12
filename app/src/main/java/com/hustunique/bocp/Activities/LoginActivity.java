@@ -6,16 +6,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.Toast;
 
 import com.boc.bocop.sdk.BOCOPPayApi;
-import com.boc.bocop.sdk.api.bean.AppInfo;
 import com.boc.bocop.sdk.api.bean.ResponseBean;
 import com.boc.bocop.sdk.api.event.ResponseListener;
 import com.boc.bocop.sdk.api.exception.ResponseError;
@@ -35,12 +32,8 @@ import com.hustunique.bocp.Utils.Utility;
 import com.boc.bocop.sdk.api.bean.oauth.*;
 import com.boc.bocop.sdk.service.impl.OauthContainerRequest;
 
-import junit.framework.TestSuite;
-
-import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 
-import cfca.mobile.exception.CodeException;
 import cfca.mobile.sip.SipBox;
 import cfca.mobile.sip.SipResult;
 
@@ -117,7 +110,7 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_layout);
+        setContentView(R.layout.layout_login);
         oauthHandle=new OauthHandler();
         testOAuth(LoginActivity.this,CONSUMER_KEY, CONSUMER_SECRET, new ResponseListener() {
 

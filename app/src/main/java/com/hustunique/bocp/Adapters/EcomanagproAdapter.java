@@ -5,12 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hustunique.bocp.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -47,7 +44,7 @@ public class EcomanagproAdapter extends BaseAdapter {
         ViewHolder holder;
         if(convertView==null){
             holder=new ViewHolder();
-            convertView= LayoutInflater.from(mcontext).inflate(R.layout.ecomanagprolist_item,null);
+            convertView= LayoutInflater.from(mcontext).inflate(R.layout.item_ecomanagprolist,null);
             holder.title=(TextView)convertView.findViewById(R.id.ecptitle);
             holder.date=(TextView)convertView.findViewById(R.id.ecpdate);
             convertView.setTag(holder);

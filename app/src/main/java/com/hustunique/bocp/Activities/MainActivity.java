@@ -1,9 +1,12 @@
 package com.hustunique.bocp.Activities;
 
+import android.app.AlertDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,6 +45,13 @@ public class MainActivity extends Activity implements OnClickListener {
             startActivity(intent);
 
         }
+
+        AlertDialog.Builder bd=new AlertDialog.Builder(MainActivity.this);
+        View v= LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_moneyremaining,null);
+        bd.setView(v);
+        bd.create();
+        bd.show();
+
 
     }
 

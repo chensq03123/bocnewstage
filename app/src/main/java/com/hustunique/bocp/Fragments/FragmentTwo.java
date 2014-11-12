@@ -35,7 +35,7 @@ public class FragmentTwo extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.ecomanafragmentlayout,null);
+        View v=inflater.inflate(R.layout.fragment_ecomanapro,null);
         ListView mecmangpro=(ListView)v.findViewById(R.id.ecomanagprolist);
 
         mlistItems = new ArrayList<Map<String,String>>();

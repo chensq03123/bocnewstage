@@ -27,6 +27,17 @@
         </activity>
 
         <activity
+            android:name=".Utils.gesturepasswd.LockActivity"
+            android:label="@string/title_activity_login" >
+        </activity>
+
+        <activity
+            android:name=".Utils.gesturepasswd.LockSetupActivity"
+            android:label="@string/title_activity_login" >
+
+        </activity>
+
+        <activity
             android:name=".Activities.AccountSettingActivity"
             android:label="@string/title_activity_login" >
 
