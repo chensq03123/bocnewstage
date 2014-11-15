@@ -666,7 +666,7 @@ public class MaterialMenuDrawable extends Drawable implements Animatable {
 	public void animateIconState(IconState state, boolean drawTouch) {
         synchronized (lock) {
             if (transformationRunning) {
-                transformation.end();
+               transformation.end();
                 pressedCircle.end();
             }
             drawTouchCircle = drawTouch;

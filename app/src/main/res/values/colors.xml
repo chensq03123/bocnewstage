@@ -28,4 +28,7 @@
     <color name="tradetype_in_color">#448aff</color>
     <color name="trade_item_color">#cccccc</color>
     <color name="actionbar_color">#e53935</color>
+    <color name="red">#ff5654</color>
+    <color name="transparent_red">#ddff5654</color>
+
 </resources>

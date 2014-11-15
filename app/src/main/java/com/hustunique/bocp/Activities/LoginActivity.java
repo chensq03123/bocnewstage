@@ -2,6 +2,7 @@ package com.hustunique.bocp.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,8 +17,9 @@ import com.boc.bocop.sdk.api.bean.ResponseBean;
 import com.boc.bocop.sdk.api.bean.oauth.BOCOPOAuthInfo;
 import com.boc.bocop.sdk.api.event.ResponseListener;
 import com.hustunique.bocp.R;
+import com.hustunique.bocp.Utils.AppConstants;
 import com.hustunique.bocp.Utils.NetworkConstant;
-
+import com.hustunique.bocp.Utils.gesturepasswd.LockActivity;
 
 
 public class LoginActivity extends Activity {
@@ -102,6 +104,13 @@ public class LoginActivity extends Activity {
             }
         });
 
+        SharedPreferences preferences = getSharedPreferences(AppConstants.LOCK, MODE_PRIVATE);
+        String lockPattenString = preferences.getString(AppConstants.LOCK_KEY, null);
+
+        if (lockPattenString != null) {
+            Intent intent = new Intent(this, LockActivity.class);
+            startActivity(intent);
+        }
        // authorize();
     }
     @Override

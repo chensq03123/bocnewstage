@@ -1,15 +1,20 @@
 package com.hustunique.bocp.Activities;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Property;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -62,6 +67,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
     private DrawerLayout     drawerLayout;
     private boolean          direction;
     private int menustate;
+    private ObjectAnimator presscircle;
 
     private Handler mhandler=new Handler(){
         @Override
@@ -106,7 +112,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
             @Override
             public void onClick(View v) {
                 menustate = generateState(menustate);
-                 materialMenuView.animatePressedState(intToState(menustate));
+                materialMenuView.animatePressedState(intToState(menustate));
                 mDrawerLayout.openDrawer(Gravity.START);
             }
         });
@@ -131,7 +137,14 @@ public class MainActivityo extends IndicatorFragmentActivity {
         mainaddbtn.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-
+             ObjectAnimator a1= ObjectAnimator.ofFloat(mainaddbtn,"scaleX",1.0f,2f);
+             ObjectAnimator a2=ObjectAnimator.ofFloat(mainaddbtn,"scaleY",1.0f,2f);
+             ObjectAnimator a3=ObjectAnimator.ofFloat(mainaddbtn,"")
+             AnimatorSet set=new AnimatorSet();
+             set.setDuration(2000);
+             set.setInterpolator(new DecelerateInterpolator());
+             set.play(a1).with(a2);
+             set.start();
          }
         });
 
@@ -182,7 +195,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
         mainaddbtn.setAnimation(animation2);
         animation2.startNow();
 
-        mainaddbtn.setOnClickListener(new View.OnClickListener() {
+       /* mainaddbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                // compat.setVisibility(View.VISIBLE);
@@ -211,11 +224,11 @@ public class MainActivityo extends IndicatorFragmentActivity {
                     }
                 });
                 */
-                LinearLayout layout=(LinearLayout)findViewById(R.id.btn_options);
+              /*  LinearLayout layout=(LinearLayout)findViewById(R.id.btn_options);
                 layout.setVisibility(View.VISIBLE);
                 layout.startAnimation(animation3);
             }
-        });
+        });*/
 
     }
 

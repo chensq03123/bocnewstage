@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/setting"
+        android:textSize="16sp"
         android:layout_marginLeft="32dp"
         android:gravity="center_vertical"
         />
@@ -18,26 +20,44 @@
         android:layout_marginRight="16dp"
         android:background="@android:color/darker_gray"/>
     <LinearLayout
+        android:id="@+id/setting_cardmanagement"
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center_vertical"
-        android:layout_marginLeft="32dp">
+       >
         <TextView
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="@string/str_card"/>
+            android:textSize="18sp"
+            android:textColor= "@drawable/layout_click"
+            android:duplicateParentState="true"
+            android:text="@string/str_card"
+            android:layout_marginLeft="32dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2张"
+            android:textColor= "@drawable/layout_click"
+            android:duplicateParentState="true"
             android:layout_marginTop="3dp"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:layout_marginLeft="32dp"/>
         </LinearLayout>
-
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@android:color/darker_gray"/>
+    <LinearLayout
+        android:id="@+id/setting_gesturepasswd"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_height="72dp"
         android:orientation="vertical"
         android:gravity="center_vertical"
@@ -45,51 +65,88 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="18sp"
+            android:textColor= "@drawable/layout_click"
+            android:duplicateParentState="true"
             android:text="@string/strpasswd"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor= "@drawable/layout_click"
+            android:duplicateParentState="true"
             android:text="@string/str_chgestpsw"
             android:layout_marginTop="3dp"
             android:textSize="14sp"/>
     </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@android:color/darker_gray"/>
     <LinearLayout
+     android:id="@+id/setting_tradelimitation"
     android:layout_width="match_parent"
     android:layout_height="72dp"
+        android:clickable="true"
+        android:focusable="true"
     android:orientation="vertical"
     android:gravity="center_vertical"
     android:layout_marginLeft="32dp">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="18sp"
+
+        android:textColor= "@drawable/layout_click"
+        android:duplicateParentState="true"
         android:text="@string/str_tradelimit"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="2张"
+        android:textColor= "@drawable/layout_click"
+        android:duplicateParentState="true"
         android:layout_marginTop="3dp"
         android:textSize="14sp"/>
 </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@android:color/darker_gray"/>
     <LinearLayout
+    android:id="@+id/setting_remainalarm"
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:orientation="vertical"
+    android:clickable="true"
+    android:focusable="true"
     android:gravity="center_vertical"
     android:layout_marginLeft="32dp">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textColor= "@drawable/layout_click"
+        android:duplicateParentState="true"
+        android:textSize="18sp"
         android:text="@string/str_remaintip"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor= "@drawable/layout_click"
+        android:duplicateParentState="true"
         android:text="2张"
         android:layout_marginTop="3dp"
         android:textSize="14sp"/>
 </LinearLayout>
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@android:color/darker_gray"/>
 
 </LinearLayout>
