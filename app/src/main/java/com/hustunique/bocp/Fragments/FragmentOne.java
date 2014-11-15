@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.hustunique.bocp.Adapters.TradeRecordBaseAdapter;
 import com.hustunique.bocp.R;
+import com.hustunique.bocp.Utils.PullToRefreshListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;

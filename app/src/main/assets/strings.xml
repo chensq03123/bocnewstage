@@ -1,0 +1,27 @@
+<resources>
+
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="user">用户名:</string>
+    <string name="userHint">易商用户名/手机号/邮箱</string>
+    <string name="pwd">密&#160;&#160;&#160;&#160;码:</string>
+    <string name="pwdHint">输入6-15位密码</string>
+    <string name="verify">验证码:</string>
+    <string name="verifyHint">填写验证码</string>
+    <string name="alertstr">  </string>
+    <!-- <string name="alertstr">温馨提示：为了给大家带来更好的服务和体验，已全新改版，请进入新版继续体验。</string> -->
+    <string name="errorMsgUser">请输入帐号</string>
+    <string name="errorMsgPwd">请输入密码</string>
+    <string name="errorMsgVerify">验证码错，请重新输入验证码</string>
+    <string name="oauthing">正在进行授权验证，请稍侯...</string>
+    <string name="error">错误</string>
+    <string name="INTERNET">应用程序需要允许Internet权限</string>
+    <string name="pasteAlert">禁用使用复制粘贴操作!</string>
+    <string name="ErrorString">服务器返回异常!</string>
+    <string name="ExceptionString">网络异常，请检查网络连接!</string>
+    <string name="SuccessString">成功</string>
+    <string name="errorMinUserText">用户名长度不符合要求！</string>
+    <string name="errorMinPwdText">口令长度不符合要求！</string>
+    <string name="sipinputerror">密码输入不正确</string>
+
+</resources>

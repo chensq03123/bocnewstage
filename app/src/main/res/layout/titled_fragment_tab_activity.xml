@@ -4,6 +4,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false"
     >
 
     <FrameLayout
@@ -49,6 +51,15 @@
         android:layout_height="56dp"
         android:background="@color/actionbar_color">
 
+        <com.balysv.materialmenu.MaterialMenuView
+            android:id="@+id/action_bar_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            app:mm_color="@android:color/white"/>
+
+
        <!-- <com.balysv.materialmenu.MaterialMenuView
             android:id="@+id/action_bar_menu"
             android:layout_width="wrap_content"
@@ -90,15 +101,52 @@
                 android:layout_weight="1"
                 android:duplicateParentState="true" />
         </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="bottom|right"
+
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/btn_options"
+                android:layout_marginRight="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/add_btn"/>
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/add_btn"/>
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/add_btn"/>
+            <ImageView
+                android:layout_marginTop="3dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginBottom="3dp"
+                android:src="@drawable/add_btn"/>
+            </LinearLayout>
         <ImageView
             android:id="@+id/main_addbtn"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_gravity="bottom|right"
+            android:focusable="true"
+            android:clickable="true"
             android:src="@drawable/add_btn"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             />
+        </LinearLayout>
+
     </FrameLayout>
 
     <!--<ListView
@@ -115,8 +163,8 @@
         android:layout_width="284dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        layout="@layout/drawerview">
-        </include>
+        layout="@layout/layout_drawerview">    </include>
+
 
 
 </android.support.v4.widget.DrawerLayout>

@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:id="@+id/fg1"
     android:orientation="vertical" >
-
     <ListView
         android:id="@+id/traderecordlist"
         style="@style/MyWidget.ListView"
@@ -15,5 +14,7 @@
         android:dividerHeight="0px"
         android:listSelector="@android:color/transparent"
         android:scrollbars="none" />
+
+
 
 </LinearLayout>

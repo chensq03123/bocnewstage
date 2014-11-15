@@ -13,7 +13,7 @@ public class MyActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.drawerview);
+        setContentView(R.layout.layout_drawerview);
     }
 
 

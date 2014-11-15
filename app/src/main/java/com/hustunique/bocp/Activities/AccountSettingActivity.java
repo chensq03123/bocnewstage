@@ -18,13 +18,13 @@ public class AccountSettingActivity extends Activity{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_accountsetting);
-        AccountsettingFragment asfragment=new AccountsettingFragment();
+       /* AccountsettingFragment asfragment=new AccountsettingFragment();
         FragmentManager fragmentManager=getFragmentManager();
         FragmentTransaction transaction=fragmentManager.beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         transaction.replace(R.id.accsetting_fram,asfragment);
         transaction.addToBackStack(null);
-        transaction.commit();
+        transaction.commit();*/
 
 
     }

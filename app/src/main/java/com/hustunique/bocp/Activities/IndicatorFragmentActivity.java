@@ -57,7 +57,7 @@ public abstract class IndicatorFragmentActivity extends FragmentActivity impleme
         return mIndicator;
     }
 
-    private DrawerLayout mDrawerLayout;
+
    // private MaterialMenuView materialMenuView;
 
     public class MyAdapter extends FragmentPagerAdapter {
@@ -109,28 +109,7 @@ public abstract class IndicatorFragmentActivity extends FragmentActivity impleme
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(getMainViewResId());
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View view, float v) {
 
-            }
-
-            @Override
-            public void onDrawerOpened(View view) {
-
-            }
-
-            @Override
-            public void onDrawerClosed(View view) {
-
-            }
-
-            @Override
-            public void onDrawerStateChanged(int i) {
-
-            }
-        });
 
 
         initViews();
