@@ -107,6 +107,7 @@ public class LoginActivity extends Activity {
         SharedPreferences preferences = getSharedPreferences(AppConstants.LOCK, MODE_PRIVATE);
         String lockPattenString = preferences.getString(AppConstants.LOCK_KEY, null);
 
+
         if (lockPattenString != null) {
             Intent intent = new Intent(this, LockActivity.class);
             startActivity(intent);

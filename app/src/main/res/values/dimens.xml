@@ -17,4 +17,6 @@
     <dimen name="acinfo_imgscale">36dp</dimen>
     <dimen name="textbtn_size">14sp</dimen>
     <dimen name="dialog_textsize">16sp</dimen>
+    <dimen name="dim56dp">56dp</dimen>
+    <dimen name="dim78dp">78dp</dimen>
 </resources>

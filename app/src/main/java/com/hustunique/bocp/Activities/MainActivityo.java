@@ -19,6 +19,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -45,6 +46,7 @@ import com.hustunique.bocp.Fragments.FragmentOne;
 import com.hustunique.bocp.Fragments.FragmentThree;
 import com.hustunique.bocp.Fragments.FragmentTwo;
 import com.hustunique.bocp.Utils.NetworkConstant;
+import com.hustunique.bocp.Utils.PromotedActionsLibrary;
 import com.ryg.fragment.ui.ViewPagerCompat;
 
 import java.util.List;
@@ -88,6 +90,34 @@ public class MainActivityo extends IndicatorFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        {
+            FrameLayout frameLayout = (FrameLayout) findViewById(R.id.btn_options);
+
+            PromotedActionsLibrary promotedActionsLibrary = new PromotedActionsLibrary();
+
+// setup library
+            promotedActionsLibrary.setup(getApplicationContext(), frameLayout);
+
+// create onClickListener for each promoted action
+            View.OnClickListener onClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Do something
+                }
+            };
+
+// customize promoted actions with a drawable
+            promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.add_btn), onClickListener);
+            promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.add_btn), onClickListener);
+            promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.add_btn), onClickListener);
+
+// create main floating button and customize it with a drawable
+            promotedActionsLibrary.addMainItem(getResources().getDrawable(R.drawable.add_btn));
+
+        }
+
+
+
         uid=getIntent().getStringExtra("UID");
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -116,7 +146,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
                 mDrawerLayout.openDrawer(Gravity.START);
             }
         });
-        mainaddbtn=(ImageView)findViewById(R.id.main_addbtn);
+        //mainaddbtn=(ImageView)findViewById(R.id.main_addbtn);
         drawerlistmenu=(ListView)findViewById(R.id.drawermenulist);
         drawerarraylist=(ListView)findViewById(R.id.drawerarrylist);
         Drawermenuadapter drawermenuadapter=new Drawermenuadapter(MainActivityo.this, AppConstants.menuitem);
@@ -134,19 +164,19 @@ public class MainActivityo extends IndicatorFragmentActivity {
             }
         });
 
-        mainaddbtn.setOnClickListener(new View.OnClickListener() {
+       /*  mainaddbtn.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-             ObjectAnimator a1= ObjectAnimator.ofFloat(mainaddbtn,"scaleX",1.0f,2f);
+            ObjectAnimator a1= ObjectAnimator.ofFloat(mainaddbtn,"scaleX",1.0f,2f);
              ObjectAnimator a2=ObjectAnimator.ofFloat(mainaddbtn,"scaleY",1.0f,2f);
-             ObjectAnimator a3=ObjectAnimator.ofFloat(mainaddbtn,"")
+           //  ObjectAnimator a3=ObjectAnimator.ofFloat(mainaddbtn,"")
              AnimatorSet set=new AnimatorSet();
              set.setDuration(2000);
              set.setInterpolator(new DecelerateInterpolator());
              set.play(a1).with(a2);
              set.start();
          }
-        });
+        });*/
 
         compat=(ViewPagerCompat)findViewById(R.id.pager);
 
@@ -192,7 +222,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
             }
         });
         animation1.setRepeatMode(Animation.REVERSE);
-        mainaddbtn.setAnimation(animation2);
+       // mainaddbtn.setAnimation(animation2);
         animation2.startNow();
 
        /* mainaddbtn.setOnClickListener(new View.OnClickListener() {

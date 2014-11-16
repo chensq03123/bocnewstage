@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.widget.Toast;
 import com.hustunique.bocp.R;
+import com.hustunique.bocp.Utils.AppConstants;
 import com.hustunique.bocp.Utils.gesturepasswd.*;
 /*
  * Author: Ruils 心怀产品梦的安卓码农 
@@ -32,9 +33,9 @@ public class LockActivity extends Activity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences preferences = getSharedPreferences(MainActivity.LOCK,
+        SharedPreferences preferences = getSharedPreferences(AppConstants.LOCK,
                 MODE_PRIVATE);
-        String patternString = preferences.getString(MainActivity.LOCK_KEY,
+        String patternString = preferences.getString(AppConstants.LOCK_KEY,
                 null);
         if (patternString == null) {
             finish();

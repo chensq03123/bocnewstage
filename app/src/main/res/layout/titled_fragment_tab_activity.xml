@@ -108,34 +108,16 @@
             android:gravity="bottom|right"
 
             android:layout_height="match_parent">
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/btn_options"
                 android:layout_marginRight="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="bottom"
-                android:visibility="gone"
                 android:orientation="vertical">
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:src="@drawable/add_btn"/>
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:src="@drawable/add_btn"/>
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/add_btn"/>
-            <ImageView
-                android:layout_marginTop="3dp"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginBottom="3dp"
-                android:src="@drawable/add_btn"/>
-            </LinearLayout>
-        <ImageView
+
+            </FrameLayout>
+        ImageView
             android:id="@+id/main_addbtn"
             android:layout_width="64dp"
             android:layout_height="64dp"
