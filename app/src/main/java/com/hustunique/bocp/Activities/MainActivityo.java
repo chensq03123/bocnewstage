@@ -49,7 +49,10 @@ import com.hustunique.bocp.Utils.NetworkConstant;
 import com.hustunique.bocp.Utils.PromotedActionsLibrary;
 import com.ryg.fragment.ui.ViewPagerCompat;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class MainActivityo extends IndicatorFragmentActivity {
@@ -70,6 +73,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
     private boolean          direction;
     private int menustate;
     private ObjectAnimator presscircle;
+    private ArrayList<Map<String,Integer>> mlist;
 
     private Handler mhandler=new Handler(){
         @Override
@@ -107,16 +111,11 @@ public class MainActivityo extends IndicatorFragmentActivity {
             };
 
 // customize promoted actions with a drawable
-            promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.add_btn), onClickListener);
-            promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.add_btn), onClickListener);
-            promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.add_btn), onClickListener);
-
+            promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.paybymoney), onClickListener);
+            promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.paybybarcode), onClickListener);
 // create main floating button and customize it with a drawable
             promotedActionsLibrary.addMainItem(getResources().getDrawable(R.drawable.add_btn));
-
         }
-
-
 
         uid=getIntent().getStringExtra("UID");
 
@@ -146,10 +145,18 @@ public class MainActivityo extends IndicatorFragmentActivity {
                 mDrawerLayout.openDrawer(Gravity.START);
             }
         });
+
+        mlist=new ArrayList<Map<String, Integer>>();
+        for(int i=0;i<AppConstants.menuitem.length;i++){
+            HashMap<String,Integer> map=new HashMap<String, Integer>();
+            map.put(AppConstants.menuitem[i],AppConstants.drawericons[i]);
+            mlist.add(map);
+        }
+
         //mainaddbtn=(ImageView)findViewById(R.id.main_addbtn);
         drawerlistmenu=(ListView)findViewById(R.id.drawermenulist);
         drawerarraylist=(ListView)findViewById(R.id.drawerarrylist);
-        Drawermenuadapter drawermenuadapter=new Drawermenuadapter(MainActivityo.this, AppConstants.menuitem);
+        Drawermenuadapter drawermenuadapter=new Drawermenuadapter(MainActivityo.this, mlist);
         SubListAdapter subadapter= new SubListAdapter(MainActivityo.this, AppConstants.submenulistitem);
         drawerarraylist.setAdapter(subadapter);
         drawerlistmenu.setAdapter(drawermenuadapter);

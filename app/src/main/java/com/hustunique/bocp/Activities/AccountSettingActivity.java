@@ -197,7 +197,10 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
     }
 
     private void Remainalarm(){
-
+        AlertDialog.Builder bd=new AlertDialog.Builder(AccountSettingActivity.this);
+        View v= LayoutInflater.from(AccountSettingActivity.this).inflate(R.layout.dialog_tradecomfirm,null);
+        bd.setView(v);
+        bd.create().show();
     }
 
     @Override
@@ -206,7 +209,7 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
             case R.id.setting_cardmanagement:Cardmanage();break;
             case R.id.setting_gesturepasswd:Step=1;temp1=null;temp2=null;GesturePassword();break;
             case R.id.setting_tradelimitation:break;
-            case R.id.setting_remainalarm:break;
+            case R.id.setting_remainalarm:Remainalarm();break;
         }
     }
 }

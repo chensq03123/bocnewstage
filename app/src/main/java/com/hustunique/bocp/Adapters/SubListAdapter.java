@@ -52,10 +52,8 @@ public class SubListAdapter extends BaseAdapter {
         }
 
         holder.mt.setText(mlist[position]);
-
         return convertView;
     }
-
     class ViewHolder{
         TextView mt;
     }

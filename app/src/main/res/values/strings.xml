@@ -14,7 +14,7 @@
     <string name="accinfo_ra">余额提醒</string>
     <string name="rmb">￥</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="setting">设置</string>
+    <string name="setting">管理</string>
     <string name="str_card">银行卡</string>
     <string name="strpasswd">密码</string>
     <string name="str_chgestpsw">对手势密码进行修改</string>
@@ -33,5 +33,6 @@
     <string name="lockpattern_recording_incorrect_too_short">"至少连接4个点，请重试"</string>
     <string name="lockpattern_error">"手势密码不对"</string><!-- Accessibility description sent when user starts drawing a lock pattern. [CHAR LIMIT=NONE] --><string name="lockscreen_access_pattern_start">Pattern started</string><!-- Accessibility description sent when the pattern times out and is cleared. [CHAR LIMIT=NONE] --><string name="lockscreen_access_pattern_cleared">Pattern cleared</string><!-- Accessibility description sent when user adds a cell to the pattern. [CHAR LIMIT=NONE] --><string name="lockscreen_access_pattern_cell_added">Cell added</string><!-- Accessibility description sent when user completes drawing a pattern. [CHAR LIMIT=NONE] -->
     <string name="lockscreen_access_pattern_detected">Pattern completed</string>
-
+    <string name="str_logout">退出登陆</string>
+    <string name="str_tradeinformationcomfirm">转账(支付)信息确认</string>
 </resources>

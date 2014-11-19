@@ -13,7 +13,7 @@ import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.hustunique.bocp.R;
 
@@ -26,13 +26,13 @@ public class PromotedActionsLibrary {
 
     FrameLayout frameLayout;
 
-    ImageButton mainImageButton;
+    ImageView mainImageButton;
 
     RotateAnimation rotateOpenAnimation;
 
     RotateAnimation rotateCloseAnimation;
 
-    ArrayList<ImageButton> promotedActions;
+    ArrayList<ImageView> promotedActions;
 
     ObjectAnimator objectAnimator[];
 
@@ -44,7 +44,7 @@ public class PromotedActionsLibrary {
 
     public void setup(Context activityContext, FrameLayout layout) {
         context = activityContext;
-        promotedActions = new ArrayList<ImageButton>();
+        promotedActions = new ArrayList<ImageView>();
         frameLayout = layout;
         px = (int) context.getResources().getDimension(R.dimen.dim56dp) + 10;
         openRotation();
@@ -52,9 +52,9 @@ public class PromotedActionsLibrary {
     }
 
     
-    public ImageButton addMainItem(Drawable drawable) {
+    public ImageView addMainItem(Drawable drawable) {
 
-        ImageButton button = (ImageButton) LayoutInflater.from(context).inflate(R.layout.main_promoted_action_button, frameLayout, false);
+        ImageView button = (ImageView) LayoutInflater.from(context).inflate(R.layout.main_promoted_action_button, frameLayout, false);
 
         button.setImageDrawable(drawable);
 
@@ -81,7 +81,7 @@ public class PromotedActionsLibrary {
 
     public void addItem(Drawable drawable, View.OnClickListener onClickListener) {
 
-        ImageButton button = (ImageButton) LayoutInflater.from(context).inflate(R.layout.promoted_action_button, frameLayout, false);
+        ImageView button = (ImageView) LayoutInflater.from(context).inflate(R.layout.promoted_action_button, frameLayout, false);
 
 
         button.setImageDrawable(drawable);
@@ -89,7 +89,6 @@ public class PromotedActionsLibrary {
         button.setOnClickListener(onClickListener);
 
         promotedActions.add(button);
-
         frameLayout.addView(button);
 
         return;
@@ -200,7 +199,7 @@ public class PromotedActionsLibrary {
      * @param position
      * @return objectAnimator
      */
-    private ObjectAnimator setCloseAnimation(ImageButton promotedAction, int position) {
+    private ObjectAnimator setCloseAnimation(ImageView promotedAction, int position) {
 
         ObjectAnimator objectAnimator;
 
@@ -229,7 +228,7 @@ public class PromotedActionsLibrary {
      * @param position
      * @return objectAnimator
      */
-    private ObjectAnimator setOpenAnimation(ImageButton promotedAction, int position) {
+    private ObjectAnimator setOpenAnimation(ImageView promotedAction, int position) {
 
         ObjectAnimator objectAnimator;
 

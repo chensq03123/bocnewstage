@@ -9,23 +9,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hustunique.bocp.R;
+import com.hustunique.bocp.Utils.AppConstants;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by chensq on 14-11-11.
  */
 public class Drawermenuadapter extends BaseAdapter {
 
-    private String[] mlist;
+    private ArrayList<Map<String,Integer>> mlist;
     private Context mcontext;
 
-    public Drawermenuadapter(Context context,String[] strings){
+    public Drawermenuadapter(Context context,ArrayList<Map<String,Integer>> list){
         this.mcontext=context;
-        this.mlist=strings;
+        this.mlist=list;
     }
 
     @Override
     public int getCount() {
-        return mlist.length;
+        return mlist.size();
     }
 
     @Override
@@ -51,8 +55,8 @@ public class Drawermenuadapter extends BaseAdapter {
             holder=(ViewHolder)convertView.getTag();
         }
 
-        holder.mt.setText(mlist[position]);
-
+        holder.mt.setText(AppConstants.menuitem[position]);
+        holder.mimg.setImageResource((mlist.get(position).get(AppConstants.menuitem[position])));
         return convertView;
     }
 
