@@ -18,5 +18,12 @@
     <dimen name="textbtn_size">14sp</dimen>
     <dimen name="dialog_textsize">16sp</dimen>
     <dimen name="dim56dp">56dp</dimen>
+    <dimen name="default_padding_top">8dp</dimen>
+    <dimen name="default_padding_bottom">8dp</dimen>
+    <dimen name="inner_padding_left">0dp</dimen>
+    <dimen name="inner_padding_right">0dp</dimen>
+    <dimen name="floating_label_text_size">12dp</dimen>
+    <dimen name="inner_components_spacing">8dp</dimen>
+    <dimen name="bottom_ellipsis_height">4dp</dimen>
     <dimen name="dim78dp">78dp</dimen>
 </resources>

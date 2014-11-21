@@ -30,5 +30,9 @@
     <color name="actionbar_color">#e53935</color>
     <color name="red">#ff5654</color>
     <color name="transparent_red">#ddff5654</color>
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="rippelColor">#FFFFFF</color>
 
 </resources>

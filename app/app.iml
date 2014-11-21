@@ -67,6 +67,7 @@
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="library" level="project" />
     <orderEntry type="library" exported="" name="CFCA_SIP_1.8.6.1" level="project" />
+    <orderEntry type="library" exported="" name="zxing" level="project" />
     <orderEntry type="library" exported="" name="android-support-v7-appcompat" level="project" />
   </component>
 </module>

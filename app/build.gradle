@@ -29,4 +29,5 @@ dependencies {
     compile files('libs/library.jar')
     compile files('libs/CFCA_SIP_1.8.6.1.jar')
     compile files('libs/bocopAndroidSDK.jar')
+    compile files('libs/zxing.jar')
 }

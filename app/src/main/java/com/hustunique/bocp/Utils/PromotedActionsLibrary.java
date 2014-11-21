@@ -163,7 +163,7 @@ public class PromotedActionsLibrary {
         animation.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
-                mainImageButton.startAnimation(rotateOpenAnimation);
+               // mainImageButton.startAnimation(rotateOpenAnimation);
                 mainImageButton.setClickable(false);
                 showPromotedActions();
             }

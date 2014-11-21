@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -34,9 +35,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="转到"/>
-        <EditText
+        <com.hustunique.bocp.Utils.views.MaterialEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:baseColor="@android:color/holo_blue_dark"
             android:text="1234556789"/>
         </LinearLayout>
     <LinearLayout
@@ -49,9 +51,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="转账金额"/>
-        <EditText
+        <com.hustunique.bocp.Utils.views.MaterialEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:baseColor="@android:color/holo_blue_dark"
             android:text="1234556789"/>
     </LinearLayout>
     <LinearLayout
@@ -64,9 +67,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="备注"/>
-        <EditText
+        <com.hustunique.bocp.Utils.views.MaterialEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:baseColor="@android:color/holo_blue_dark"
             android:text="1234556789"/>
     </LinearLayout>
 </LinearLayout>

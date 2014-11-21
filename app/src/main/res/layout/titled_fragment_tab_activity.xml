@@ -117,7 +117,8 @@
                 android:orientation="vertical">
 
             </FrameLayout>
-        ImageView
+
+         ImageView
             android:id="@+id/main_addbtn"
             android:layout_width="64dp"
             android:layout_height="64dp"
@@ -146,7 +147,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         layout="@layout/layout_drawerview">    </include>
-
 
 
 </android.support.v4.widget.DrawerLayout>

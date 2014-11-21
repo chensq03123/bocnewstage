@@ -3,6 +3,7 @@ package com.hustunique.bocp.Activities;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -102,17 +103,9 @@ public class MainActivityo extends IndicatorFragmentActivity {
 // setup library
             promotedActionsLibrary.setup(getApplicationContext(), frameLayout);
 
-// create onClickListener for each promoted action
-            View.OnClickListener onClickListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Do something
-                }
-            };
-
 // customize promoted actions with a drawable
-            promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.paybymoney), onClickListener);
-            promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.paybybarcode), onClickListener);
+            promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.paybymoney), new Onpopupitemclicklistener1());
+            promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.paybybarcode),new Onpopupitemclicklistener2());
 // create main floating button and customize it with a drawable
             promotedActionsLibrary.addMainItem(getResources().getDrawable(R.drawable.add_btn));
         }
@@ -171,102 +164,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
             }
         });
 
-       /*  mainaddbtn.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-            ObjectAnimator a1= ObjectAnimator.ofFloat(mainaddbtn,"scaleX",1.0f,2f);
-             ObjectAnimator a2=ObjectAnimator.ofFloat(mainaddbtn,"scaleY",1.0f,2f);
-           //  ObjectAnimator a3=ObjectAnimator.ofFloat(mainaddbtn,"")
-             AnimatorSet set=new AnimatorSet();
-             set.setDuration(2000);
-             set.setInterpolator(new DecelerateInterpolator());
-             set.play(a1).with(a2);
-             set.start();
-         }
-        });*/
-
         compat=(ViewPagerCompat)findViewById(R.id.pager);
-
-        final Animation animation3= AnimationUtils.loadAnimation(MainActivityo.this,R.anim.animation_in);
-        final Animation animation4=AnimationUtils.loadAnimation(MainActivityo.this,R.anim.animation_out);
-
-        final ScaleAnimation animation1 =new ScaleAnimation(1.0f, 1.4f, 1.0f, 1.4f,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        final ScaleAnimation animation2 =new ScaleAnimation(1.0f, (1.0f/1.4f), 1.0f, (1.0f/1.4f),
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        animation1.setDuration(2000);
-        animation2.setDuration(2000);
-        animation1.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                animation2.startNow();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        animation2.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                animation1.startNow();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        animation1.setRepeatMode(Animation.REVERSE);
-       // mainaddbtn.setAnimation(animation2);
-        animation2.startNow();
-
-       /* mainaddbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // compat.setVisibility(View.VISIBLE);
-                //compat.startAnimation(animation3);
-               /*mcreditbalsearch(MainActivityo.this, NetworkConstant.CONSUMER_KEY,NetworkConstant.CONSUMER_SECRET,"2014091500000615",new ResponseListener() {
-                    @Override
-                    public void onComplete(ResponseBean responseBean) {
-                        BOCOPOAuthInfo info=(BOCOPOAuthInfo)responseBean;
-                        info.getRtnmsg();
-                        mhandler.obtainMessage(1,info.getRtnmsg().toString()).sendToTarget();
-                    }
-
-                    @Override
-                    public void onException(Exception e) {
-
-                    }
-
-                    @Override
-                    public void onError(Error error) {
-
-                    }
-
-                    @Override
-                    public void onCancel() {
-
-                    }
-                });
-                */
-              /*  LinearLayout layout=(LinearLayout)findViewById(R.id.btn_options);
-                layout.setVisibility(View.VISIBLE);
-                layout.startAnimation(animation3);
-            }
-        });*/
-
     }
 
     @Override
@@ -302,6 +200,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
         client.post(Constants.httpPrefix+ "/app/creditbalsearch", BaseService.genPublicAsrHeader(context), criteria, new JsonResponseListenerAdapterHandler<Fund900Response>(Fund900Response.class, listener));
     }
 
+
     public static int generateState(int previous) {
         int generated = new Random().nextInt(4);
         return generated != previous ? generated : generateState(previous);
@@ -319,5 +218,21 @@ public class MainActivityo extends IndicatorFragmentActivity {
                 return MaterialMenuDrawable.IconState.CHECK;
         }
         throw new IllegalArgumentException("Must be a number [0,3)");
+    }
+
+    class Onpopupitemclicklistener1 implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            Intent intent=new Intent(MainActivityo.this,PayActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    class Onpopupitemclicklistener2 implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            Intent intent=new Intent(MainActivityo.this,MipcaActivityCapture.class);
+            startActivity(intent);
+        }
     }
 }
