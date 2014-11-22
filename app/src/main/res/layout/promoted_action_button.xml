@@ -6,6 +6,5 @@
     android:layout_height="@dimen/dim56dp"
     android:layout_gravity="bottom|right"
     android:visibility="gone"
-    android:background="@drawable/onivas_fab_circle"
     />
 

@@ -51,7 +51,7 @@ public final class ViewfinderView extends View {
 	
 	private static final int CORNER_WIDTH = 10;
 
-	private static final int MIDDLE_LINE_WIDTH = 6;
+	private static final int MIDDLE_LINE_WIDTH = 4;
 	
 	
 	private static final int MIDDLE_LINE_PADDING = 5;

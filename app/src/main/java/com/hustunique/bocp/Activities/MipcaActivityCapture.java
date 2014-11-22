@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
@@ -55,7 +56,7 @@ public class MipcaActivityCapture extends Activity implements Callback {
 		CameraManager.init(getApplication());
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 		
-		Button mButtonBack = (Button) findViewById(R.id.button_back);
+		TextView mButtonBack = (TextView) findViewById(R.id.button_back);
 		mButtonBack.setOnClickListener(new OnClickListener() {
 			
 			@Override

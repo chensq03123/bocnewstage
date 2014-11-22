@@ -118,7 +118,7 @@ public class PromotedActionsLibrary {
         animation.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
-                mainImageButton.startAnimation(rotateCloseAnimation);
+               // mainImageButton.startAnimation(rotateCloseAnimation);
                 mainImageButton.setClickable(false);
             }
 

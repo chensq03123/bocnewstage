@@ -19,8 +19,9 @@
         android:layout_height="2dp"
         android:background="@android:color/darker_gray"/>
     <ExpandableListView
+        android:id="@+id/defaultcard"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="wrap_content">
         </ExpandableListView>
     <ImageView
         android:layout_marginLeft="16dp"
@@ -42,7 +43,8 @@
         android:layout_height="2dp"
         android:background="@android:color/darker_gray"/>
     <ExpandableListView
+        android:id="@+id/cardslist"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="wrap_content">
     </ExpandableListView>
 </LinearLayout>
