@@ -98,7 +98,9 @@ public class LoginActivity extends Activity {
         logoutbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logoutApp();
+                //logoutApp();
+                Intent intent=new Intent(LoginActivity.this,MainActivityo.class);
+                startActivity(intent);
             }
         });
 

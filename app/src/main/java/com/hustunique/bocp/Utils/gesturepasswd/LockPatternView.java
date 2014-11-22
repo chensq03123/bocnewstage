@@ -32,6 +32,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
@@ -270,7 +271,7 @@ public class LockPatternView extends View {
         mPathPaint.setStrokeCap(Paint.Cap.ROUND);
 
         // lot's of bitmaps!
-        mBitmapBtnDefault = getBitmapFor(R.drawable.btn_code_lock_default_holo);
+        mBitmapBtnDefault = getBitmapFor(R.drawable.passwordcircle);
         mBitmapBtnTouched = getBitmapFor(R.drawable.btn_code_lock_touched_holo);
         mBitmapCircleDefault = getBitmapFor(R.drawable.indicator_code_lock_point_area_default_holo);
         mBitmapCircleGreen = getBitmapFor(R.drawable.indicator_code_lock_point_area_green_holo);
@@ -285,7 +286,7 @@ public class LockPatternView extends View {
 
         for (Bitmap bitmap : bitmaps) {
             mBitmapWidth = Math.max(mBitmapWidth, bitmap.getWidth());
-            mBitmapHeight = Math.max(mBitmapHeight, bitmap.getHeight());
+            mBitmapHeight =Math.max(mBitmapHeight, bitmap.getHeight());
         }
 
     }
@@ -1158,4 +1159,10 @@ public class LockPatternView extends View {
                     }
                 };
     }
+
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getResources().getDisplayMetrics());
+    }
+
 }
