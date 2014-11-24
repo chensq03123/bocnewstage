@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.hustunique.bocp.Utils.views.RippleView
+
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ripple="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    ripple:rv_color="@color/transparent_red">
-<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_vertical">
+    <com.hustunique.bocp.Utils.views.RippleView
 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ripple:rv_color="@color/transparent_red">
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
     <TextView
         android:layout_marginTop="8dp"
         android:id="@+id/ecptitle"
@@ -30,5 +36,6 @@
         android:layout_marginBottom="8dp"
         android:textSize="14sp"
         android:textColor="@android:color/darker_gray"/>
+        </LinearLayout>
+    </com.hustunique.bocp.Utils.views.RippleView>
 </LinearLayout>
-</com.hustunique.bocp.Utils.views.RippleView>

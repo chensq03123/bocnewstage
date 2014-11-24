@@ -5,6 +5,8 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Property;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
@@ -48,6 +51,7 @@ import com.hustunique.bocp.Fragments.FragmentThree;
 import com.hustunique.bocp.Fragments.FragmentTwo;
 import com.hustunique.bocp.Utils.NetworkConstant;
 import com.hustunique.bocp.Utils.PromotedActionsLibrary;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.ryg.fragment.ui.ViewPagerCompat;
 
 import java.util.ArrayList;
@@ -75,6 +79,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
     private int menustate;
     private ObjectAnimator presscircle;
     private ArrayList<Map<String,Integer>> mlist;
+    private FrameLayout mainframe;
 
     private Handler mhandler=new Handler(){
         @Override
@@ -95,13 +100,22 @@ public class MainActivityo extends IndicatorFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            // Holo light action bar color is #DDDDDD
+            int actionBarColor = Color.rgb(0xc6, 0x28, 0x28);
+            tintManager.setTintColor(actionBarColor);
+        }
+
         {
             FrameLayout frameLayout = (FrameLayout) findViewById(R.id.btn_options);
-
+            mainframe=(FrameLayout)findViewById(R.id.main_framelayout);
             PromotedActionsLibrary promotedActionsLibrary = new PromotedActionsLibrary();
-
+            LinearLayout mbgn=(LinearLayout)findViewById(R.id.main_mbgn);
 // setup library
-            promotedActionsLibrary.setup(getApplicationContext(), frameLayout);
+            promotedActionsLibrary.setup(getApplicationContext(), frameLayout,mbgn);
 
 // customize promoted actions with a drawable
             promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.paybymoney), new Onpopupitemclicklistener1());

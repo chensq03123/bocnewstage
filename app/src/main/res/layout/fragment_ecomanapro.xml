@@ -4,13 +4,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
-    <com.github.ksoichiro.android.observablescrollview.ObservableListView
+    <com.hustunique.bocp.Utils.views.view.XListView
         android:id="@+id/ecomanagprolist"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        </com.github.ksoichiro.android.observablescrollview.ObservableListView>
-    </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
+        </com.hustunique.bocp.Utils.views.view.XListView>
 </LinearLayout>

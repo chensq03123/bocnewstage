@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="PulltoRefreshLib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/libs/PulltoRefreshLib.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

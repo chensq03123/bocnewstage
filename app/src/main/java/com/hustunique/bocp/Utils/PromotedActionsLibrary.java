@@ -8,12 +8,14 @@ import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.hustunique.bocp.R;
 
@@ -25,7 +27,7 @@ public class PromotedActionsLibrary {
     Context context;
 
     FrameLayout frameLayout;
-
+    LinearLayout mbgn;
     ImageView mainImageButton;
 
     RotateAnimation rotateOpenAnimation;
@@ -38,20 +40,42 @@ public class PromotedActionsLibrary {
 
     private int px;
 
-    private static final int ANIMATION_TIME = 100;
-
+    private static final int ANIMATION_TIME = 200;
+    private  AlphaAnimation openalphaAnimation,closealphaAnimation;
     private boolean isMenuOpened;
 
-    public void setup(Context activityContext, FrameLayout layout) {
+    public void setup(Context activityContext, FrameLayout layout,LinearLayout mbgn) {
         context = activityContext;
         promotedActions = new ArrayList<ImageView>();
         frameLayout = layout;
         px = (int) context.getResources().getDimension(R.dimen.dim56dp) + 10;
         openRotation();
         closeRotation();
+        this.mbgn=mbgn;
+        openalphaAnimation=new AlphaAnimation(0,0.9f);
+        closealphaAnimation=new AlphaAnimation(0.9f,0);
+        openalphaAnimation.setDuration(200);
+        closealphaAnimation.setDuration(200);
+        openalphaAnimation.setFillAfter(true);
+        openalphaAnimation.setFillEnabled(true);
+        closealphaAnimation.setFillAfter(true);
+        closealphaAnimation.setFillEnabled(true);
+        mbgn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isMenuOpened){
+                    closePromotedActions().start();
+                    v.setClickable(false);
+                    v.setVisibility(View.GONE);
+                    v.startAnimation(closealphaAnimation);
+                    isMenuOpened = false;
+                }
+            }
+        });
     }
 
-    
+
+
     public ImageView addMainItem(Drawable drawable) {
 
         ImageView button = (ImageView) LayoutInflater.from(context).inflate(R.layout.main_promoted_action_button, frameLayout, false);
@@ -64,10 +88,17 @@ public class PromotedActionsLibrary {
 
                 if (isMenuOpened) {
                     closePromotedActions().start();
+                    mbgn.startAnimation(closealphaAnimation);
+                    mbgn.setClickable(false);
+                    mbgn.setVisibility(View.GONE);
                     isMenuOpened = false;
                 } else {
                     isMenuOpened = true;
+                    mbgn.setClickable(true);
+                    mbgn.startAnimation(openalphaAnimation);
                     openPromotedActions().start();
+                    mbgn.setVisibility(View.VISIBLE);
+
                 }
             }
         });
@@ -243,7 +274,7 @@ public class PromotedActionsLibrary {
             objectAnimator.setRepeatCount(0);
             objectAnimator.setDuration(ANIMATION_TIME * (promotedActions.size() - position));
         }
-        objectAnimator.setInterpolator(new OvershootInterpolator(1.2f));
+        objectAnimator.setInterpolator(new OvershootInterpolator(0.8f));
         return objectAnimator;
     }
 

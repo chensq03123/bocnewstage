@@ -20,7 +20,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.hustunique.bocp.Adapters.TradeRecordBaseAdapter;
 import com.hustunique.bocp.R;
-import com.hustunique.bocp.Utils.PullToRefreshListView;
+import com.hustunique.bocp.Utils.views.view.XListView;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,7 +79,7 @@ public class FragmentOne extends Fragment {
         newrequest.add(stringRequest);
 
 
-        ListView listView = (ListView) mMainView.findViewById(R.id.traderecordlist);
+       XListView listView = (XListView) mMainView.findViewById(R.id.traderecordlist);
         TradeRecordBaseAdapter adapter=new TradeRecordBaseAdapter(mContext,mlistItems);
         listView.setAdapter(adapter);
         return mMainView;

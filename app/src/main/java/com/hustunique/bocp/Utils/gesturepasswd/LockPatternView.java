@@ -271,7 +271,7 @@ public class LockPatternView extends View {
         mPathPaint.setStrokeCap(Paint.Cap.ROUND);
 
         // lot's of bitmaps!
-        mBitmapBtnDefault = getBitmapFor(R.drawable.passwordcircle);
+        mBitmapBtnDefault = getBitmapFor(R.drawable.passwdcircle);
         mBitmapBtnTouched = getBitmapFor(R.drawable.btn_code_lock_touched_holo);
         mBitmapCircleDefault = getBitmapFor(R.drawable.indicator_code_lock_point_area_default_holo);
         mBitmapCircleGreen = getBitmapFor(R.drawable.indicator_code_lock_point_area_green_holo);

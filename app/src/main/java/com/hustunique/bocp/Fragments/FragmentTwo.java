@@ -3,6 +3,7 @@ package com.hustunique.bocp.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.hustunique.bocp.Adapters.EcomanagproAdapter;
 import com.hustunique.bocp.R;
+import com.hustunique.bocp.Utils.views.view.XListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,8 +24,8 @@ public class FragmentTwo extends Fragment {
 
     private Context mcontext;
     private ArrayList<Map<String,String>> mlistItems;
-    ObservableListView mecmangpro;
-
+    XListView mecmangpro;
+    private Handler mhandler;
 
 
     public FragmentTwo() {
@@ -38,7 +40,7 @@ public class FragmentTwo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_ecomanapro,null);
-        ObservableListView mecmangpro=(ObservableListView)v.findViewById(R.id.ecomanagprolist);
+         mecmangpro=(XListView)v.findViewById(R.id.ecomanagprolist);
 
         mlistItems = new ArrayList<Map<String,String>>();
         for (int i = 0; i < 20; i++) {
@@ -48,10 +50,40 @@ public class FragmentTwo extends Fragment {
             mlistItems.add(map);
         }
 
+        mhandler=new Handler();
         EcomanagproAdapter adapter=new EcomanagproAdapter(mcontext,mlistItems);
         mecmangpro.setAdapter(adapter);
-        setListViewHeightBasedOnChildren(mecmangpro);
+        mecmangpro.setPullLoadEnable(true);
+        mecmangpro.setXListViewListener(new XListView.IXListViewListener() {
+            @Override
+            public void onRefresh() {
+                mhandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onLoad();
+                    }
+                }, 2000);
+            }
+
+            @Override
+            public void onLoadMore() {
+                mhandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onLoad();
+                    }
+                }, 2000);
+            }
+        });
+
         return v;
+    }
+
+
+    private void onLoad() {
+        mecmangpro.stopRefresh();
+        mecmangpro.stopLoadMore();
+        mecmangpro.setRefreshTime("刚刚");
     }
 
     public void setListViewHeightBasedOnChildren(ListView listView) {

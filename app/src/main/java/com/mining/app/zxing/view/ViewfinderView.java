@@ -161,7 +161,7 @@ public final class ViewfinderView extends View {
 			paint.setColor(Color.WHITE);
 			paint.setTextSize(TEXT_SIZE * density);
 			paint.setAlpha(0x40);
-			paint.setTypeface(Typeface.create("System", Typeface.BOLD));
+			//paint.setTypeface(Typeface.create("System", Typeface.BOLD));
 			canvas.drawText("将二维码放入框内, 即可自动扫描", frame.left, (float) (frame.bottom + (float)TEXT_PADDING_TOP *density), paint);
 			
 			
@@ -215,7 +215,7 @@ public final class ViewfinderView extends View {
 	}
 
 	public void addPossibleResultPoint(ResultPoint point) {
-		possibleResultPoints.add(point);
+		//possibleResultPoints.add(point);
 	}
 
 }

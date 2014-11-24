@@ -18,6 +18,6 @@
         android:layout_height="match_parent"
         android:text="主页"
         android:textSize="16sp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginLeft="22dp"
         android:gravity="center_vertical"/>
 </LinearLayout>
