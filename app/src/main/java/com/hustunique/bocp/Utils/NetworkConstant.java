@@ -7,7 +7,7 @@ public class NetworkConstant {
     public static final String CONSUMER_SECRET = "78b930ce450d19747e8cf16e190cc975e96775f9cac6cc12c4";
 
 	/** 登录的地址 */
-	public static final String LOGIN_SVR = "https://openapi.boc.cn";
+	public static final String LOGIN_SVR = "https://opendtp.boc.cn";
 	/** 注册调用的Html5界面的地址 */
 	public static final String SIGNUP_URL = "https://open.boc.cn/wap/register.php";
 	/** APP 的key */

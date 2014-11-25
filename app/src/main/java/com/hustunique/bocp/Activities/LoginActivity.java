@@ -45,9 +45,9 @@ public class LoginActivity extends Activity {
         }
     };
     private void authorize() {
-        BOCOPPayApi bocopSDKApi = BOCOPPayApi.getInstance(this, NetworkConstant.CONSUMER_KEY, NetworkConstant.CONSUMER_SECRET);
+        BOCOPPayApi bocopSDKApi = BOCOPPayApi.getInstance(LoginActivity.this, NetworkConstant.CONSUMER_KEY, NetworkConstant.CONSUMER_SECRET);
         // 设置等参数      上下文，           登录地址，          登录端口，          是否显示注册按钮，        注册地址
-        bocopSDKApi.initURLIPPort(this, NetworkConstant.LOGIN_SVR, NetworkConstant.HTTPS_PORT, true, NetworkConstant.SIGNUP_URL);
+        bocopSDKApi.initURLIPPort(this, NetworkConstant.LOGIN_SVR, NetworkConstant.HTTPS_PORT, false, NetworkConstant.SIGNUP_URL);
         // 登录SDK回调接口
         bocopSDKApi.authorize(this, new ResponseListener() {
             @Override

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.util.Property;
 import android.view.Gravity;
 import android.view.View;
@@ -29,6 +30,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.balysv.materialmenu.MaterialMenu;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.MaterialMenuView;
@@ -177,8 +185,31 @@ public class MainActivityo extends IndicatorFragmentActivity {
               }
             }
         });
-
         compat=(ViewPagerCompat)findViewById(R.id.pager);
+
+        RequestQueue requestQueue= Volley.newRequestQueue(MainActivityo.this);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,"http://openapi.boc.cn/app/querydebitcardbycusid",new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("response", response);
+            }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map=new HashMap<String, String>();
+                map.put("uid","5");
+                map.put("cid","2");
+                map.put("period","2");
+                return map;
+            }
+        };
+        requestQueue.add(stringRequest);
+
     }
 
     @Override
