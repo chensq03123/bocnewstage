@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,15 +18,30 @@ import android.widget.Toast;
 import com.balysv.materialmenu.MaterialMenu;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.MaterialMenuView;
+import com.boc.bocop.sdk.BOCOPPayApi;
+import com.boc.bocop.sdk.api.bean.ResponseBean;
+import com.boc.bocop.sdk.api.bean.fund.Fund900Response;
+import com.boc.bocop.sdk.api.bean.oauth.BOCOPOAuthInfo;
+import com.boc.bocop.sdk.api.event.ResponseListener;
+import com.boc.bocop.sdk.http.AsyncHttpClient;
+import com.boc.bocop.sdk.http.AsyncHttpRequest;
+import com.boc.bocop.sdk.http.AsyncResponseHandler;
+import com.boc.bocop.sdk.http.JsonResponseListenerAdapterHandler;
+import com.boc.bocop.sdk.http.RequestParams;
+import com.boc.bocop.sdk.service.BaseService;
+import com.boc.bocop.sdk.util.AccessTokenKeeper;
+import com.boc.bocop.sdk.util.ParaType;
 import com.hustunique.bocp.Fragments.CardManagementFragment;
 import com.hustunique.bocp.R;
 import com.hustunique.bocp.Utils.AppConstants;
 import com.hustunique.bocp.Utils.gesturepasswd.LockPatternView;
+import com.hustunique.bocp.Utils.views.MaterialEditText;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -38,6 +54,8 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
     private int Step=1;
     String temp1=null;
     String temp2=null;
+    private ImageView addcardbtn;
+    final String ADDCARDURL="https://openapi.boc.cn/app/adduserinfo";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +93,8 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
         }
 
     private void Cardmanage(){
+        addcardbtn=(ImageView)findViewById(R.id.addnewcard_btn);
+        addcardbtn.setVisibility(View.VISIBLE);
         CardManagementFragment asfragment=new CardManagementFragment();
         FragmentManager fragmentManager=getFragmentManager();
         FragmentTransaction transaction=fragmentManager.beginTransaction();
@@ -82,6 +102,29 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
         transaction.replace(R.id.accsetting_fram,asfragment);
         transaction.addToBackStack(null);
         transaction.commit();
+        addcardbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Log.i("add_accesstoken", AccessTokenKeeper.readAccessToken(AccountSettingActivity.this).toString());
+                AlertDialog.Builder bd=new AlertDialog.Builder(AccountSettingActivity.this);
+                View layout= LayoutInflater.from(AccountSettingActivity.this).inflate(R.layout.dialog_addnewcard,null);
+                TextView comfirm=(TextView)layout.findViewById(R.id.addcard_comfirm);
+                final MaterialEditText cardnum=(MaterialEditText)layout.findViewById(R.id.addnewcar_number);
+                final MaterialEditText subname=(MaterialEditText)layout.findViewById(R.id.addnewcard_subname);
+                comfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String cardnumstr=cardnum.getText().toString();
+                        String subnamestr=subname.getText().toString();
+
+                        Addnewcard("5765825000366567638","testcard","snowlovegood_test_408");
+                        Toast.makeText(AccountSettingActivity.this,"clisk",Toast.LENGTH_LONG).show();
+                    }
+                });
+                bd.setView(layout);
+                bd.create().show();
+            }
+        });
     }
 
     private void GesturePassword(){
@@ -132,10 +175,14 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
                 if (choosePattern == null) {
                     choosePattern = new ArrayList<LockPatternView.Cell>(pattern);
                     String patternstr = Arrays.toString(choosePattern.toArray());
-                    List<LockPatternView.Cell>  lockPattern = LockPatternView.stringToPattern(lockPattenString);
+
+                    List<LockPatternView.Cell> lockPattern=null;
+                    if(lockPattenString!=null)
+                    lockPattern = LockPatternView.stringToPattern(lockPattenString);
                     switch (Step) {
                         case 1:
                             //List<LockPatternView.Cell>  lockPattern = LockPatternView.stringToPattern(lockPattenString);
+
                             if (!pattern.equals(lockPattern)){
                                 Toast.makeText(AccountSettingActivity.this,
                                         "wrong password"+lockPattenString,
@@ -194,6 +241,49 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
 
     private void Tradelimit(){
 
+    }
+
+    private void Addnewcard(String cardnum,String subname,String userid){
+        LinkedHashMap<String,String> param=new LinkedHashMap<String, String>();
+        param.put("USRID",userid);
+        param.put("ACCNO",cardnum);
+        param.put("ALIAS",subname);
+
+        LinkedHashMap<String,String> header= BaseService.genPublicAsrHeader(BOCOPPayApi.getContext());
+        Log.i("token",header.toString());
+       put(ADDCARDURL, header, param, new JsonResponseListenerAdapterHandler<Fund900Response>(Fund900Response.class, new ResponseListener() {
+           @Override
+           public void onComplete(ResponseBean responseBean) {
+               Log.i("response information", responseBean.toString());
+           }
+
+           @Override
+           public void onException(Exception e) {
+
+           }
+
+           @Override
+           public void onError(Error error) {
+
+           }
+
+           @Override
+           public void onCancel() {
+
+           }
+       }));
+    }
+
+    public void put(String url, LinkedHashMap<String, String> header,
+                    LinkedHashMap<String, String> paramsBody,
+                    AsyncResponseHandler responseHandler) {
+        sendRequest(url, ParaType.HTTPMETHOD_PUT,header,paramsBody,responseHandler);
+    }
+
+    private void sendRequest(String url,String method,LinkedHashMap<String, String> header,LinkedHashMap<String, String> paramsBody,AsyncResponseHandler responseHandler) {
+        RequestParams params = new RequestParams(url,method,header,paramsBody,responseHandler);
+        AsyncHttpRequest request  = new AsyncHttpRequest(params);
+        request.execute();
     }
 
     private void Remainalarm(){

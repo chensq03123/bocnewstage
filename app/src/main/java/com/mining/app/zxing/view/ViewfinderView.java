@@ -18,6 +18,8 @@ package com.mining.app.zxing.view;
 
 import java.util.Collection;
 import java.util.HashSet;
+
+import com.hustunique.bocp.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -30,7 +32,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.google.zxing.ResultPoint;
-import com.hustunique.bocp.R;
 import com.mining.app.zxing.camera.CameraManager;
 
 /**
@@ -51,7 +52,7 @@ public final class ViewfinderView extends View {
 	
 	private static final int CORNER_WIDTH = 10;
 
-	private static final int MIDDLE_LINE_WIDTH = 4;
+	private static final int MIDDLE_LINE_WIDTH = 6;
 	
 	
 	private static final int MIDDLE_LINE_PADDING = 5;
@@ -161,7 +162,7 @@ public final class ViewfinderView extends View {
 			paint.setColor(Color.WHITE);
 			paint.setTextSize(TEXT_SIZE * density);
 			paint.setAlpha(0x40);
-			//paint.setTypeface(Typeface.create("System", Typeface.BOLD));
+			paint.setTypeface(Typeface.create("System", Typeface.BOLD));
 			canvas.drawText("将二维码放入框内, 即可自动扫描", frame.left, (float) (frame.bottom + (float)TEXT_PADDING_TOP *density), paint);
 			
 			

@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.util.Property;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -42,11 +43,13 @@ import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.MaterialMenuView;
 import com.boc.bocop.sdk.api.bean.ResponseBean;
 import com.boc.bocop.sdk.api.bean.oauth.BOCOPOAuthInfo;
+import com.boc.bocop.sdk.api.bean.useinfo.UserInfoCriteria;
 import com.boc.bocop.sdk.common.Constants;
 import com.boc.bocop.sdk.BOCOPPayApi;
 import com.boc.bocop.sdk.api.bean.fund.Fund900Response;
 import com.boc.bocop.sdk.api.event.ResponseListener;
 import com.boc.bocop.sdk.http.AsyncHttpClient;
+import com.boc.bocop.sdk.http.AsyncResponseHandler;
 import com.boc.bocop.sdk.http.JsonResponseListenerAdapterHandler;
 import com.boc.bocop.sdk.service.BaseService;
 import com.hustunique.bocp.Adapters.Drawermenuadapter;
@@ -57,13 +60,13 @@ import com.hustunique.bocp.Utils.BalanceCriteria;
 import com.hustunique.bocp.Fragments.FragmentOne;
 import com.hustunique.bocp.Fragments.FragmentThree;
 import com.hustunique.bocp.Fragments.FragmentTwo;
-import com.hustunique.bocp.Utils.NetworkConstant;
 import com.hustunique.bocp.Utils.PromotedActionsLibrary;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.ryg.fragment.ui.ViewPagerCompat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -88,7 +91,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
     private ObjectAnimator presscircle;
     private ArrayList<Map<String,Integer>> mlist;
     private FrameLayout mainframe;
-
+    private  PromotedActionsLibrary promotedActionsLibrary;
     private Handler mhandler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -99,9 +102,6 @@ public class MainActivityo extends IndicatorFragmentActivity {
 
         }
     };
-
-
-
 
 
     @Override
@@ -120,7 +120,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
         {
             FrameLayout frameLayout = (FrameLayout) findViewById(R.id.btn_options);
             mainframe=(FrameLayout)findViewById(R.id.main_framelayout);
-            PromotedActionsLibrary promotedActionsLibrary = new PromotedActionsLibrary();
+            promotedActionsLibrary= new PromotedActionsLibrary();
             LinearLayout mbgn=(LinearLayout)findViewById(R.id.main_mbgn);
 // setup library
             promotedActionsLibrary.setup(getApplicationContext(), frameLayout,mbgn);
@@ -173,7 +173,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
         drawerarraylist=(ListView)findViewById(R.id.drawerarrylist);
         Drawermenuadapter drawermenuadapter=new Drawermenuadapter(MainActivityo.this, mlist);
         SubListAdapter subadapter= new SubListAdapter(MainActivityo.this, AppConstants.submenulistitem);
-        drawerarraylist.setAdapter(subadapter);
+       // drawerarraylist.setAdapter(subadapter);
         drawerlistmenu.setAdapter(drawermenuadapter);
         drawerlistmenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
           @Override
@@ -181,36 +181,68 @@ public class MainActivityo extends IndicatorFragmentActivity {
               switch (position){
                   case 0:break;
                   case 1:toAccsettingactivity();break;
-                  case 2:break;
+                  case 2: BOCOPPayApi bocopSDKApi = BOCOPPayApi.getInstance(MainActivityo.this,
+                          "284", "78b930ce450d19747e8cf16e190cc975e96775f9cac6cc12c4");
+                      UserInfoCriteria criteria=new UserInfoCriteria();
+                      criteria.setAccno("5765825000366567638");
+                      criteria.setAlias("test");
+                      criteria.setTrantype("01");
+                         bocopSDKApi.searchUserInfo(MainActivityo.this,criteria,new ResponseListener() {
+                             @Override
+                             public void onComplete(ResponseBean responseBean) {
+                                 Log.i("sssssss",responseBean.getMsgcde()+"___"+responseBean.getRtnmsg());
+                             }
+
+                             @Override
+                             public void onException(Exception e) {
+
+                             }
+
+                             @Override
+                             public void onError(Error error) {
+
+                             }
+
+                             @Override
+                             public void onCancel() {
+
+                             }
+                         });
+                      break;
               }
             }
         });
         compat=(ViewPagerCompat)findViewById(R.id.pager);
 
-        RequestQueue requestQueue= Volley.newRequestQueue(MainActivityo.this);
-        StringRequest stringRequest=new StringRequest(Request.Method.POST,"http://openapi.boc.cn/app/querydebitcardbycusid",new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.i("response", response);
-            }
-        },new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map=new HashMap<String, String>();
-                map.put("uid","5");
-                map.put("cid","2");
-                map.put("period","2");
-                return map;
-            }
-        };
-        requestQueue.add(stringRequest);
-
     }
+
+    private void getUserinfo(){
+        AsyncHttpClient client=new AsyncHttpClient();
+        LinkedHashMap<String,Integer> para=new LinkedHashMap<String, Integer>();
+        para.put("pageno",1);
+        client.post("https://openapi.boc.cn/bocop/appfindusrinfo",BaseService.genPublicAsrHeader(MainActivityo.this),para,new JsonResponseListenerAdapterHandler<Fund900Response>(Fund900Response.class, new ResponseListener() {
+            @Override
+            public void onComplete(ResponseBean responseBean) {
+                Log.i("response",responseBean.getMsgcde()+"____"+responseBean.getRtnmsg());
+            }
+
+            @Override
+            public void onException(Exception e) {
+
+            }
+
+            @Override
+            public void onError(Error error) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        }));
+    }
+
 
     @Override
     protected int supplyTabs(List<TabInfo> tabs) {
@@ -236,7 +268,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
         BalanceCriteria criteria = new BalanceCriteria();
         criteria.setUserid(uid);
 //		criteria.setLmtamt("2014091500000615");
-        criteria.setLmtamt(mLmtamt);
+        criteria.setLmtamt("2014091500000615");
         creditbalsearch(context, criteria, handler);
     }
 
@@ -268,16 +300,33 @@ public class MainActivityo extends IndicatorFragmentActivity {
     class Onpopupitemclicklistener1 implements View.OnClickListener{
         @Override
         public void onClick(View v) {
+            promotedActionsLibrary.closepopup();
             Intent intent=new Intent(MainActivityo.this,PayActivity.class);
             startActivity(intent);
+
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            if(promotedActionsLibrary.Ispopup()){
+                promotedActionsLibrary.closepopup();
+                return false;
+            }
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
     class Onpopupitemclicklistener2 implements View.OnClickListener{
         @Override
         public void onClick(View v) {
+            promotedActionsLibrary.closepopup();
             Intent intent=new Intent(MainActivityo.this,MipcaActivityCapture.class);
             startActivity(intent);
+
         }
     }
 }

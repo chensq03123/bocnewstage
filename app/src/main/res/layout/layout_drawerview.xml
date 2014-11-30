@@ -19,12 +19,12 @@
       android:layout_height="147dp"
       android:background="@drawable/bgn_point">
 
-    <ImageView
+  <!--  <ImageView
         android:layout_width="52dp"
         android:layout_height="52dp"
         android:layout_margin="16dp"
         android:src="@drawable/host"
-        />
+        />-->
 
       <TextView
           android:layout_width="match_parent"

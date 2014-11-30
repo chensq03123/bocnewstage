@@ -27,6 +27,13 @@
                 android:text="shuiqiangcheng@hustunique.com"
                 android:textColor="@android:color/white"
                 android:textSize="17sp"/>
+        <ImageView
+            android:id="@+id/addnewcard_btn"
+            android:layout_gravity="right"
+            android:layout_width="54dp"
+            android:layout_height="54sp"
+            android:src="@drawable/addcard"
+            android:visibility="gone"/>
         </FrameLayout>
 
     <FrameLayout

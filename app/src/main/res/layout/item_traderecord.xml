@@ -1,17 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:paddingLeft="@dimen/tradeitem_padding"
     android:paddingRight="@dimen/tradeitem_padding"
     android:paddingTop="8dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical">
+    <LinearLayout
+        android:background="@drawable/cornorbottome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:background="#eee"/>
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+        android:background="@drawable/tradeitemcorner"
+        android:layout_width="match_parent"
         android:layout_height="36dp"
+
         android:orientation="horizontal"
-        android:background="#ef5350">
+      >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,15 +67,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
-                    android:textColor="@android:color/black"
+
                     android:textSize="24sp"
+                    android:textColor="#666"
                     android:text="@string/rmb"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
                         android:text="30.00"
-                        android:textColor="@android:color/black"
+                        android:textColor="#666"
                         android:textSize="24sp"/>
                     </LinearLayout>
 
@@ -105,15 +124,18 @@
                         android:textColor="@color/trade_item_color"
                         android:text="15:00"/>
                 </LinearLayout>
-
-                </LinearLayout>
+            </LinearLayout>
 
 
         </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#e0e0e0"
+            android:layout_height="3dp"
+            android:background="@drawable/gradientshap"
             android:layout_marginLeft="2dp"
             />
+
 </LinearLayout>

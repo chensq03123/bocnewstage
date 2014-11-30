@@ -14,12 +14,11 @@
     </com.handmark.pulltorefresh.library.PullToRefreshListView>-->
     <com.hustunique.bocp.Utils.views.view.XListView
         android:id="@+id/traderecordlist"
+        android:background="@android:color/transparent"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:cacheColorHint="#00000000"
-        android:divider="@null"
-        android:fadingEdge="none"
         android:fastScrollEnabled="false"
+        android:divider="@null"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:smoothScrollbar="true" />

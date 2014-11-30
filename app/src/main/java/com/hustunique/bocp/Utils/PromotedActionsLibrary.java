@@ -40,7 +40,7 @@ public class PromotedActionsLibrary {
 
     private int px;
 
-    private static final int ANIMATION_TIME = 200;
+    private static final int ANIMATION_TIME = 100;
     private  AlphaAnimation openalphaAnimation,closealphaAnimation;
     private boolean isMenuOpened;
 
@@ -274,7 +274,7 @@ public class PromotedActionsLibrary {
             objectAnimator.setRepeatCount(0);
             objectAnimator.setDuration(ANIMATION_TIME * (promotedActions.size() - position));
         }
-        objectAnimator.setInterpolator(new OvershootInterpolator(0.8f));
+        objectAnimator.setInterpolator(new OvershootInterpolator(1.2f));
         return objectAnimator;
     }
 
@@ -308,4 +308,17 @@ public class PromotedActionsLibrary {
         rotateCloseAnimation.setFillEnabled(true);
         rotateCloseAnimation.setDuration(ANIMATION_TIME);
     }
+
+    public void closepopup(){
+        closePromotedActions().start();
+        mbgn.startAnimation(closealphaAnimation);
+        mbgn.setClickable(false);
+        mbgn.setVisibility(View.GONE);
+        isMenuOpened = false;
+    }
+
+    public boolean Ispopup(){
+        return isMenuOpened;
+    }
+
 }
