@@ -2,6 +2,7 @@ package com.hustunique.bocp.Activities;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
+import android.text.InputFilter;
 import android.util.Log;
 import android.util.Property;
 import android.view.Gravity;
@@ -36,11 +38,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.balysv.materialmenu.MaterialMenu;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.MaterialMenuView;
+import com.boc.bocop.sdk.api.bean.AppInfo;
 import com.boc.bocop.sdk.api.bean.ResponseBean;
 import com.boc.bocop.sdk.api.bean.oauth.BOCOPOAuthInfo;
 import com.boc.bocop.sdk.api.bean.useinfo.UserInfoCriteria;
@@ -52,6 +56,9 @@ import com.boc.bocop.sdk.http.AsyncHttpClient;
 import com.boc.bocop.sdk.http.AsyncResponseHandler;
 import com.boc.bocop.sdk.http.JsonResponseListenerAdapterHandler;
 import com.boc.bocop.sdk.service.BaseService;
+import com.boc.bocop.sdk.util.AccessTokenKeeper;
+import com.boc.bocop.sdk.util.Oauth2AccessToken;
+import com.boc.bocop.sdk.util.StringUtil;
 import com.hustunique.bocp.Adapters.Drawermenuadapter;
 import com.hustunique.bocp.Adapters.SubListAdapter;
 import com.hustunique.bocp.R;
@@ -60,11 +67,17 @@ import com.hustunique.bocp.Utils.BalanceCriteria;
 import com.hustunique.bocp.Fragments.FragmentOne;
 import com.hustunique.bocp.Fragments.FragmentThree;
 import com.hustunique.bocp.Fragments.FragmentTwo;
+import com.hustunique.bocp.Utils.ContactTransCriteria;
 import com.hustunique.bocp.Utils.PromotedActionsLibrary;
+import com.hustunique.bocp.Utils.UtilTool;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.ryg.fragment.ui.ViewPagerCompat;
 
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -116,6 +129,35 @@ public class MainActivityo extends IndicatorFragmentActivity {
             int actionBarColor = Color.rgb(0xc6, 0x28, 0x28);
             tintManager.setTintColor(actionBarColor);
         }
+
+        //startActivity(intent);
+      /*  BalanceCriteria balanceCriteria=new BalanceCriteria();
+        balanceCriteria.setUserid("cary32_test_391");
+        balanceCriteria.setLmtamt("2014091500000615");
+        creditbalsearch(MainActivityo.this,balanceCriteria,new ResponseListener() {
+            @Override
+            public void onComplete(ResponseBean responseBean) {
+                //Log.i("response result",responseBean.getRtnmsg());
+            }
+
+            @Override
+            public void onException(Exception e) {
+
+            }
+
+            @Override
+            public void onError(Error error) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+            */
+
+        Creditbalsearch();
 
         {
             FrameLayout frameLayout = (FrameLayout) findViewById(R.id.btn_options);
@@ -181,39 +223,18 @@ public class MainActivityo extends IndicatorFragmentActivity {
               switch (position){
                   case 0:break;
                   case 1:toAccsettingactivity();break;
-                  case 2: BOCOPPayApi bocopSDKApi = BOCOPPayApi.getInstance(MainActivityo.this,
-                          "284", "78b930ce450d19747e8cf16e190cc975e96775f9cac6cc12c4");
-                      UserInfoCriteria criteria=new UserInfoCriteria();
-                      criteria.setAccno("5765825000366567638");
-                      criteria.setAlias("test");
-                      criteria.setTrantype("01");
-                         bocopSDKApi.searchUserInfo(MainActivityo.this,criteria,new ResponseListener() {
-                             @Override
-                             public void onComplete(ResponseBean responseBean) {
-                                 Log.i("sssssss",responseBean.getMsgcde()+"___"+responseBean.getRtnmsg());
-                             }
-
-                             @Override
-                             public void onException(Exception e) {
-
-                             }
-
-                             @Override
-                             public void onError(Error error) {
-
-                             }
-
-                             @Override
-                             public void onCancel() {
-
-                             }
-                         });
+                  case 2:NewTrade();
                       break;
               }
             }
         });
         compat=(ViewPagerCompat)findViewById(R.id.pager);
 
+    }
+
+    private void NewTrade(){
+          Intent intent=new Intent(MainActivityo.this,NewTradActivity.class);
+          startActivity(intent);
     }
 
     private void getUserinfo(){
@@ -275,8 +296,61 @@ public class MainActivityo extends IndicatorFragmentActivity {
     public  void creditbalsearch(Context context,BalanceCriteria criteria, ResponseListener listener) {
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(Constants.httpPrefix+ "/app/creditbalsearch", BaseService.genPublicAsrHeader(context), criteria, new JsonResponseListenerAdapterHandler<Fund900Response>(Fund900Response.class, listener));
+
     }
 
+    private void Creditbalsearch(){
+        RequestQueue requestQueue=Volley.newRequestQueue(MainActivityo.this);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,Constants.httpPrefix+ "/app/creditbalsearch",new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                 Log.i("sssresssssss",response);
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return BaseService.genPublicAsrHeader(MainActivityo.this);
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                LinkedHashMap<String,String> map=new LinkedHashMap<String, String>();
+                map.put("userid","cary32_test_391");
+                map.put("lmtamt","2014091500000615");
+                return map;
+            }
+        };
+
+        HashMap<String,String> map=new HashMap<String, String>();
+        map.put("userid","cary32_test_391");
+        map.put("lmtamt","2014091500000615");
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST,Constants.httpPrefix+ "/app/creditbalsearch",new JSONObject(map),new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Log.i("sssstttttttt",response.getString("balance"));
+                }catch (Exception e){}
+
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return BaseService.genPublicAsrHeader(MainActivityo.this);
+            }
+        };
+
+        requestQueue.add(jsonObjectRequest);
+    }
 
     public static int generateState(int previous) {
         int generated = new Random().nextInt(4);
@@ -301,9 +375,67 @@ public class MainActivityo extends IndicatorFragmentActivity {
         @Override
         public void onClick(View v) {
             promotedActionsLibrary.closepopup();
-            Intent intent=new Intent(MainActivityo.this,PayActivity.class);
-            startActivity(intent);
+           // Intent intent=new Intent(MainActivityo.this,PayActivity.class);
+            //startActivity(intent);
+            RequestQueue requestQueue=Volley.newRequestQueue(MainActivityo.this);
+            HashMap<String,String> map=new HashMap<String, String>();
+            map.put("userid","cary32_test_391");
+            map.put("accno","");
+            map.put("alias","");
+            map.put("trntyp","");
+            map.put("ifncal","");
+            map.put("pageno","1");
+          //  map.put("limitamt","2014091500000615");
+            JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST,Constants.httpPrefix+"/debit/appfindusrinfo",new JSONObject(map),new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        Log.i("sssstrade",response.toString());
+                        Toast.makeText(MainActivityo.this,response.toString(),Toast.LENGTH_LONG).show();
+                    }catch (Exception e){}
 
+                }
+            },new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                        Log.i("ssssserror",error.getMessage());
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+                    map.put("clentid", AppInfo.getAppKeyValue());
+
+                    Oauth2AccessToken accessToken = AccessTokenKeeper
+                            .readAccessToken(BOCOPPayApi.getContext());
+                    String mUserId = accessToken.getUserId();
+                    String token = accessToken.getToken();
+//		String token = "87a3ff45-24e0-4758-b7d9-c72e5283569d";
+                    if (!StringUtil.isNullOrEmpty(mUserId)) {
+                        map.put("userid", mUserId);
+                    }
+
+                    if (!StringUtil.isNullOrEmpty(token)) {
+                        map.put("acton", token);
+                    }
+
+                    map.put("chnflg", "1");
+
+                    SimpleDateFormat format = new SimpleDateFormat("yyyyMMDD");
+                    // 获取当前时间
+                    String nowData = format.format(new Date(System.currentTimeMillis()));
+                    map.put("trandt", nowData);
+
+                    SimpleDateFormat formatTime = new SimpleDateFormat("HHmmss");
+                    // 获取当前时间
+                    String nowTime = formatTime
+                            .format(new Date(System.currentTimeMillis()));
+                    map.put("trantm", nowTime);
+                    return map;
+                }
+            };
+
+            requestQueue.add(jsonObjectRequest);
         }
     }
 
@@ -324,9 +456,75 @@ public class MainActivityo extends IndicatorFragmentActivity {
         @Override
         public void onClick(View v) {
             promotedActionsLibrary.closepopup();
-            Intent intent=new Intent(MainActivityo.this,MipcaActivityCapture.class);
-            startActivity(intent);
+           // Intent intent=new Intent(MainActivityo.this,MipcaActivityCapture.class);
+            //startActivity(intent);
+            RequestQueue requestQueue=Volley.newRequestQueue(MainActivityo.this);
+            HashMap<String,String> map=new HashMap<String, String>();
+            map.put("userid","cary32_test_391");
+           // map.put("lmtamtout",)
+            map.put("lmtamtout","2014092200000923");
+            map.put("cardnumin","6217870700000000001");
+            map.put("amount","200");
+            map.put("currency","001");
+            map.put("username","zhangsan");
+            //post("http://openapi.boc.cn/bocop/base/asr/cardtransfer",BaseService.genPublicAsrHeader(MainActivityo.this),map,);
+            JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST,Constants.httpPrefix + "/base/asr/cardtransfer",new JSONObject(map),new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        Log.i("sssstttttttt",response.toString());
+                        //Toast.makeText(MainActivityo.this,response.getString("balance"),Toast.LENGTH_LONG).show();
+                    }catch (Exception e){}
 
+                }
+            },new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                        Log.i("respon",error.toString());
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    return BaseService.genPublicAsrHeader(MainActivityo.this);
+                }
+            };
+
+            requestQueue.add(jsonObjectRequest);
+            ContactTransCriteria criteria=new ContactTransCriteria();
+            criteria.setUserid("cary32_test_391");
+            criteria.setAmount("300");
+            criteria.setCardnumin("6217870700000000001");
+            criteria.setCurrency("001");
+            criteria.setUsername("zhangsan");
+            criteria.setLmtamtout("2014092200000923");
+            /*commoncardtransfer(MainActivityo.this, criteria, new ResponseListener() {
+                @Override
+                public void onComplete(ResponseBean responseBean) {
+                    Log.i("responsetrans",responseBean.getRtnmsg());
+                }
+
+                @Override
+                public void onException(Exception e) {
+
+                }
+
+                @Override
+                public void onError(Error error) {
+
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+            });
+                */
         }
     }
+
+    public static void commoncardtransfer(Context context,ContactTransCriteria criteria, ResponseListener listener) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(Constants.httpPrefix + "/base/asr/cardtransfer", BaseService.genPublicAsrHeader(context), criteria, new JsonResponseListenerAdapterHandler<Fund900Response>(Fund900Response.class, listener));
+    }
+
 }

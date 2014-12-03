@@ -12,4 +12,7 @@ public class AppConstants {
     public final static String[] submenulistitem={"交易历史","理财产品","众筹信息","卡片管理"};
     public static final String LOCK = "lock";
     public static final String LOCK_KEY = "lock_key";
+    public static String UID="4";
+    public static String cid="1";
+    public static String tid;
 }

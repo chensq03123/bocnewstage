@@ -1,6 +1,7 @@
 package com.hustunique.bocp.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -14,18 +15,35 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.boc.bocop.sdk.BOCOPPayApi;
 import com.boc.bocop.sdk.api.bean.ResponseBean;
+import com.boc.bocop.sdk.api.bean.fund.Fund900Response;
 import com.boc.bocop.sdk.api.bean.oauth.BOCOPOAuthInfo;
 import com.boc.bocop.sdk.api.event.ResponseListener;
+import com.boc.bocop.sdk.common.Constants;
+import com.boc.bocop.sdk.http.AsyncHttpClient;
+import com.boc.bocop.sdk.http.JsonResponseListenerAdapterHandler;
+import com.boc.bocop.sdk.service.BaseService;
 import com.hustunique.bocp.R;
 import com.hustunique.bocp.Utils.AppConstants;
+import com.hustunique.bocp.Utils.BalanceCriteria;
 import com.hustunique.bocp.Utils.gesturepasswd.LockActivity;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class LoginActivity extends Activity {
@@ -44,8 +62,7 @@ public class LoginActivity extends Activity {
     /**编码*/
     public static final String ENCODE = "utf-8";
 
-    private Button loginbtn;
-    private TextView logoutbtn;
+    private Button loginbtn,logoutbtn;
 
     private Handler mhandler=new Handler(){
         @Override
@@ -53,11 +70,32 @@ public class LoginActivity extends Activity {
             super.handleMessage(msg);
 
             if(msg.what==1){
-                Toast.makeText(LoginActivity.this,msg.obj.toString(),Toast.LENGTH_LONG).show();
+               Toast.makeText(LoginActivity.this,msg.obj.toString(),Toast.LENGTH_LONG).show();
+                final String uid=msg.obj.toString();
+                RequestQueue queue= Volley.newRequestQueue(LoginActivity.this);
+                StringRequest stringRequest=new StringRequest(Request.Method.POST,"http://104.160.39.34:8000/requestuid/",new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(LoginActivity.this,response.toString(),Toast.LENGTH_LONG).show();
+                        Intent intent=new Intent(LoginActivity.this,MainActivityo.class);
+                        intent.putExtra("UID",uid);
+                        startActivity(intent);
+                    }
+                },new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-                Intent intent=new Intent(LoginActivity.this,MainActivityo.class);
-                intent.putExtra("UID",msg.obj.toString());
-                startActivity(intent);
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String,String> params=new HashMap<String, String>();
+                        params.put("username",uid);
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+
             }else if(msg.what==0){
                 Toast.makeText(LoginActivity.this,msg.obj.toString(),Toast.LENGTH_LONG).show();
             }
@@ -142,17 +180,17 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.layout_login);
 
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      /*  if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
             // Holo light action bar color is #DDDDDD
             int actionBarColor = Color.rgb(0xc6, 0x28, 0x28);
             tintManager.setTintColor(actionBarColor);
-        }
+        }*/
 
         loginbtn=(Button)findViewById(R.id.login);
-        logoutbtn=(TextView)findViewById(R.id.logout);
+        logoutbtn=(Button)findViewById(R.id.logout);
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +203,34 @@ public class LoginActivity extends Activity {
         logoutbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logoutApp();
+
+               // Intent intent=new Intent(LoginActivity.this,RegistActivity.class);
+                //startActivity(intent);
+                BalanceCriteria balanceCriteria=new BalanceCriteria();
+                balanceCriteria.setUserid("cary32_test_391");
+                balanceCriteria.setLmtamt("2014091500000615");
+                creditbalsearch(LoginActivity.this,balanceCriteria,new ResponseListener() {
+                    @Override
+                    public void onComplete(ResponseBean responseBean) {
+                        Log.i("sssssssssssba",responseBean.getMsgcde()+responseBean.getMsgcde());
+                    }
+
+                    @Override
+                    public void onException(Exception e) {
+
+                    }
+
+                    @Override
+                    public void onError(Error error) {
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+                });
+                //logoutApp();
                // Intent intent=new Intent(LoginActivity.this,MainActivityo.class);
                 //startActivity(intent);
             }
@@ -200,7 +265,10 @@ public class LoginActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    public static void creditbalsearch(Context context,BalanceCriteria criteria, ResponseListener listener) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post( "https://opendtp.boc.cn"+ "/app/creditbalsearch", BaseService.genPublicAsrHeader(context), criteria, new JsonResponseListenerAdapterHandler<Fund900Response>(Fund900Response.class, listener));
+    }
 
 
 }

@@ -24,7 +24,6 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp"/>-->
        <Spinner
-           android:layout_marginLeft="16dp"
            android:id="@+id/pay_cardselection"
            android:layout_width="match_parent"
            android:layout_height="match_parent"></Spinner>
@@ -39,12 +38,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#555"
             android:text="转到"/>
         <com.hustunique.bocp.Utils.views.MaterialEditText
+            android:layout_marginRight="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:baseColor="@android:color/holo_blue_dark"
-            android:text="1234556789"/>
+            app:baseColor="@android:color/darker_gray"
+            android:hint="转入账户"/>
         </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,12 +57,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#555"
             android:text="转账金额"/>
         <com.hustunique.bocp.Utils.views.MaterialEditText
+            android:layout_marginRight="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:baseColor="@android:color/holo_blue_dark"
-            android:text="1234556789"/>
+            app:baseColor="@android:color/darker_gray"
+            android:hint="转入金额"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,11 +76,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#555"
             android:text="备注"/>
         <com.hustunique.bocp.Utils.views.MaterialEditText
+            android:layout_marginRight="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:baseColor="@android:color/holo_blue_dark"
-            android:text="1234556789"/>
+            app:baseColor="@android:color/darker_gray"
+            android:hint="请输入备注信息"/>
     </LinearLayout>
 </LinearLayout>

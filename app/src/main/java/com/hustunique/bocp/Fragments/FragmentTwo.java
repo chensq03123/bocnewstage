@@ -1,21 +1,40 @@
 package com.hustunique.bocp.Fragments;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
+import com.google.gson.JsonObject;
 import com.hustunique.bocp.Adapters.EcomanagproAdapter;
 import com.hustunique.bocp.R;
+import com.hustunique.bocp.Utils.AppConstants;
 import com.hustunique.bocp.Utils.views.view.XListView;
+import com.mining.app.zxing.decoding.Intents;
 
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +61,49 @@ public class FragmentTwo extends Fragment {
         View v=inflater.inflate(R.layout.fragment_ecomanapro,null);
          mecmangpro=(XListView)v.findViewById(R.id.ecomanagprolist);
 
+
+        RequestQueue queue= Volley.newRequestQueue(mcontext);
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,"http://104.160.39.34:8000/queryproducts/",new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("proresponse",response.toString());
+                try {
+                    JSONObject jsonObject=new JSONObject(response);
+                    AppConstants.cid=jsonObject.getString("cid");
+                }catch (Exception e){}
+               }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String jsonString = new String(response.data, "UTF-8");
+                    return Response.success(jsonString,
+                            HttpHeaderParser.parseCacheHeaders(response));
+                    } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                    } catch (Exception je) {
+                    return Response.error(new ParseError(je));
+                    }
+                }
+
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> hashMap=new HashMap<String, String>();
+                hashMap.put("pid_start","0");
+                hashMap.put("pid_end","30");
+                hashMap.put("flag","1");
+                return hashMap;
+            }
+        };
+
+        queue.add(stringRequest);
         mlistItems = new ArrayList<Map<String,String>>();
         for (int i = 0; i < 20; i++) {
             Map<String,String> map = new HashMap<String,String>();
@@ -109,5 +171,8 @@ public class FragmentTwo extends Fragment {
         // params.height最后得到整个ListView完整显示需要的高度
         listView.setLayoutParams(params);
     }
+
+
+
 
 }

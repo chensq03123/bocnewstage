@@ -15,6 +15,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.balysv.materialmenu.MaterialMenu;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.MaterialMenuView;
@@ -23,6 +31,7 @@ import com.boc.bocop.sdk.api.bean.ResponseBean;
 import com.boc.bocop.sdk.api.bean.fund.Fund900Response;
 import com.boc.bocop.sdk.api.bean.oauth.BOCOPOAuthInfo;
 import com.boc.bocop.sdk.api.event.ResponseListener;
+import com.boc.bocop.sdk.common.Constants;
 import com.boc.bocop.sdk.http.AsyncHttpClient;
 import com.boc.bocop.sdk.http.AsyncHttpRequest;
 import com.boc.bocop.sdk.http.AsyncResponseHandler;
@@ -37,12 +46,15 @@ import com.hustunique.bocp.Utils.AppConstants;
 import com.hustunique.bocp.Utils.gesturepasswd.LockPatternView;
 import com.hustunique.bocp.Utils.views.MaterialEditText;
 
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by chensq on 14-11-11.
@@ -56,12 +68,13 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
     String temp2=null;
     private ImageView addcardbtn;
     final String ADDCARDURL="https://openapi.boc.cn/app/adduserinfo";
-
+    private RequestQueue queue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_accountsetting);
+        queue = Volley.newRequestQueue(AccountSettingActivity.this);
         InitWidgets();
 
        /* AccountsettingFragment asfragment=new AccountsettingFragment();
@@ -87,7 +100,7 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
             menuView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    menuView.animatePressedState(MaterialMenuDrawable.IconState.BURGER);
+                    AccountSettingActivity.this.finish();
                 }
             });
         }
@@ -117,7 +130,7 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
                         String cardnumstr=cardnum.getText().toString();
                         String subnamestr=subname.getText().toString();
 
-                        Addnewcard("5765825000366567638","testcard","snowlovegood_test_408");
+                        Addnewcard("6217870700000000001","testcard","snowlovegood_test_408");
                         Toast.makeText(AccountSettingActivity.this,"clisk",Toast.LENGTH_LONG).show();
                     }
                 });
@@ -240,18 +253,69 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
     }
 
     private void Tradelimit(){
-
+        AlertDialog.Builder bd=new AlertDialog.Builder(AccountSettingActivity.this);
+        View v= LayoutInflater.from(AccountSettingActivity.this).inflate(R.layout.dialog_budgetsetting,null);
+        bd.setView(v);
+        bd.create().show();
     }
 
     private void Addnewcard(String cardnum,String subname,String userid){
+
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,"http://104.160.39.34:8000/requestcid/",new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                 Log.i("Stringresponse",response);
+                try {
+                    JSONObject Jobj = new JSONObject(response);
+                    AppConstants.cid=Jobj.getString("cid");
+                }catch (Exception e){}
+
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> hashMap=new HashMap<String, String>();
+                hashMap.put("uid",AppConstants.UID);
+                hashMap.put("cardname","testmain");
+                hashMap.put("cardnumber","6217870700000000001");
+                hashMap.put("limitmoney","1000");
+                return hashMap;
+            }
+        };
+        queue.add(stringRequest);
         LinkedHashMap<String,String> param=new LinkedHashMap<String, String>();
         param.put("USRID",userid);
         param.put("ACCNO",cardnum);
         param.put("ALIAS",subname);
-
         LinkedHashMap<String,String> header= BaseService.genPublicAsrHeader(BOCOPPayApi.getContext());
-        Log.i("token",header.toString());
-       put(ADDCARDURL, header, param, new JsonResponseListenerAdapterHandler<Fund900Response>(Fund900Response.class, new ResponseListener() {
+
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.PUT, "https://openapi.boc.cn/app/adduserinfo",new JSONObject(param),new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("newcardrep",response.toString());
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return BaseService.genPublicAsrHeader(AccountSettingActivity.this);
+            }
+        };
+
+        queue.add(jsonObjectRequest);
+
+       /* Log.i("token",header.toString());
+       //put(ADDCARDURL, header, param, new JsonResponseListenerAdapterHandler<Fund900Response>(Fund900Response.class, new ResponseListener() {
            @Override
            public void onComplete(ResponseBean responseBean) {
                Log.i("response information", responseBean.toString());
@@ -271,7 +335,7 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
            public void onCancel() {
 
            }
-       }));
+       }));*/
     }
 
     public void put(String url, LinkedHashMap<String, String> header,
@@ -287,10 +351,10 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
     }
 
     private void Remainalarm(){
-        AlertDialog.Builder bd=new AlertDialog.Builder(AccountSettingActivity.this);
+        AlertDialog bd=new AlertDialog.Builder(AccountSettingActivity.this).create();
         View v= LayoutInflater.from(AccountSettingActivity.this).inflate(R.layout.dialog_tradecomfirm,null);
         bd.setView(v);
-        bd.create().show();
+        bd.show();
     }
 
     @Override
@@ -298,7 +362,7 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
         switch (v.getId()){
             case R.id.setting_cardmanagement:Cardmanage();break;
             case R.id.setting_gesturepasswd:Step=1;temp1=null;temp2=null;GesturePassword();break;
-            case R.id.setting_tradelimitation:break;
+            case R.id.setting_tradelimitation:Tradelimit();break;
             case R.id.setting_remainalarm:Remainalarm();break;
         }
     }

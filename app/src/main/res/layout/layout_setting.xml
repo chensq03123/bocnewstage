@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="@string/setting"
+        android:textColor="#555"
         android:textSize="16sp"
         android:layout_marginLeft="32dp"
         android:gravity="center_vertical"
@@ -33,7 +34,6 @@
         android:gravity="center_vertical"
        >
         <TextView
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
@@ -112,7 +112,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="2张"
+        android:text="￥300.00"
         android:textColor= "@drawable/layout_click"
         android:duplicateParentState="true"
         android:layout_marginTop="3dp"
@@ -149,7 +149,7 @@
         android:layout_height="wrap_content"
         android:textColor= "@drawable/layout_click"
         android:duplicateParentState="true"
-        android:text="2张"
+        android:text="≤￥500.00"
         android:layout_marginTop="3dp"
         android:textSize="14sp"/>
 </LinearLayout></com.hustunique.bocp.Utils.views.RippleView>
