@@ -1,24 +1,23 @@
 package com.hustunique.bocp.Utils.gesturepasswd;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import com.hustunique.bocp.Utils.gesturepasswd.LockPatternView.Cell;
-import com.hustunique.bocp.Utils.gesturepasswd.LockPatternView.DisplayMode;
-import com.hustunique.bocp.Activities.MainActivity;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import com.hustunique.bocp.R;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.hustunique.bocp.R;
+import com.hustunique.bocp.Utils.AppConstants;
+import com.hustunique.bocp.Utils.gesturepasswd.LockPatternView.Cell;
+import com.hustunique.bocp.Utils.gesturepasswd.LockPatternView.DisplayMode;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /*
  * Author: Ruils 心怀产品梦的安卓码农 
@@ -124,10 +123,10 @@ public class LockSetupActivity extends Activity implements
             } else if (step == STEP_4) {
 
                 SharedPreferences preferences = getSharedPreferences(
-                        MainActivity.LOCK, MODE_PRIVATE);
+                        AppConstants.LOCK, MODE_PRIVATE);
                 preferences
                         .edit()
-                        .putString(MainActivity.LOCK_KEY,
+                        .putString(AppConstants.LOCK_KEY,
                                 LockPatternView.patternToString(choosePattern))
                         .commit();
 

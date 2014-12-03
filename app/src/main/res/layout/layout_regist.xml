@@ -11,6 +11,16 @@
         android:layout_height="56dp"
         android:background="@color/actionbar_color"
         >
+
+        <com.balysv.materialmenu.MaterialMenuView
+            android:id="@+id/regist_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:clickable="true"
+            android:layout_gravity="center_vertical"
+            app:mm_color="@android:color/white"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -22,5 +32,7 @@
     <WebView
         android:id="@+id/registwebview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></WebView>
+        android:layout_height="match_parent">
+
+        </WebView>
 </LinearLayout>

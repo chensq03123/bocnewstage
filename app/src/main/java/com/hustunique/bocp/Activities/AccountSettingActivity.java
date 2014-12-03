@@ -144,7 +144,7 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
         final SharedPreferences preferences = getSharedPreferences(AppConstants.LOCK, MODE_PRIVATE);
         final String lockPattenString = preferences.getString(AppConstants.LOCK_KEY, null);
 
-        AlertDialog.Builder bd=new AlertDialog.Builder(AccountSettingActivity.this);
+       final AlertDialog bd=new AlertDialog.Builder(AccountSettingActivity.this).create();
         View v= LayoutInflater.from(AccountSettingActivity.this).inflate(R.layout.dialog_gesturepasswdsetting,null);
         final TextView hint=(TextView)v.findViewById(R.id.gp_hint);
         if(lockPattenString==null) {
@@ -240,6 +240,7 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
                                 Toast.makeText(AccountSettingActivity.this,
                                         "successed",
                                         Toast.LENGTH_LONG).show();
+                                bd.dismiss();
                             }
                             break;
                     }
@@ -248,7 +249,6 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
         });
 
         bd.setView(v);
-        bd.create();
         bd.show();
     }
 
@@ -311,31 +311,7 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
                 return BaseService.genPublicAsrHeader(AccountSettingActivity.this);
             }
         };
-
         queue.add(jsonObjectRequest);
-
-       /* Log.i("token",header.toString());
-       //put(ADDCARDURL, header, param, new JsonResponseListenerAdapterHandler<Fund900Response>(Fund900Response.class, new ResponseListener() {
-           @Override
-           public void onComplete(ResponseBean responseBean) {
-               Log.i("response information", responseBean.toString());
-           }
-
-           @Override
-           public void onException(Exception e) {
-
-           }
-
-           @Override
-           public void onError(Error error) {
-
-           }
-
-           @Override
-           public void onCancel() {
-
-           }
-       }));*/
     }
 
     public void put(String url, LinkedHashMap<String, String> header,

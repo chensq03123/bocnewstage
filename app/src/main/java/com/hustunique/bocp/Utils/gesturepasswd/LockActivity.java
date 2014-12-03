@@ -1,10 +1,6 @@
 package com.hustunique.bocp.Utils.gesturepasswd;
 
 import java.util.List;
-
-
-import com.hustunique.bocp.Activities.MainActivity;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.SharedPreferences;

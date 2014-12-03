@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
@@ -179,6 +180,9 @@ public class LoginActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.layout_login);
 
+        AlphaAnimation alphaAnimation=new AlphaAnimation(0.0f,1.0f);
+        alphaAnimation.setDuration(2000);
+
 
       /*  if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -192,6 +196,10 @@ public class LoginActivity extends Activity {
         loginbtn=(Button)findViewById(R.id.login);
         logoutbtn=(Button)findViewById(R.id.logout);
 
+        loginbtn.setAnimation(alphaAnimation);
+        logoutbtn.setAnimation(alphaAnimation);
+        alphaAnimation.startNow();
+
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,36 +211,9 @@ public class LoginActivity extends Activity {
         logoutbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               Intent intent=new Intent(LoginActivity.this,RegistActivity.class);
+               startActivity(intent);
 
-               // Intent intent=new Intent(LoginActivity.this,RegistActivity.class);
-                //startActivity(intent);
-                BalanceCriteria balanceCriteria=new BalanceCriteria();
-                balanceCriteria.setUserid("cary32_test_391");
-                balanceCriteria.setLmtamt("2014091500000615");
-                creditbalsearch(LoginActivity.this,balanceCriteria,new ResponseListener() {
-                    @Override
-                    public void onComplete(ResponseBean responseBean) {
-                        Log.i("sssssssssssba",responseBean.getMsgcde()+responseBean.getMsgcde());
-                    }
-
-                    @Override
-                    public void onException(Exception e) {
-
-                    }
-
-                    @Override
-                    public void onError(Error error) {
-
-                    }
-
-                    @Override
-                    public void onCancel() {
-
-                    }
-                });
-                //logoutApp();
-               // Intent intent=new Intent(LoginActivity.this,MainActivityo.class);
-                //startActivity(intent);
             }
         });
 
@@ -264,11 +245,4 @@ public class LoginActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public static void creditbalsearch(Context context,BalanceCriteria criteria, ResponseListener listener) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.post( "https://opendtp.boc.cn"+ "/app/creditbalsearch", BaseService.genPublicAsrHeader(context), criteria, new JsonResponseListenerAdapterHandler<Fund900Response>(Fund900Response.class, listener));
-    }
-
-
 }

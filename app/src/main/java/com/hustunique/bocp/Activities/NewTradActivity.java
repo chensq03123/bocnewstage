@@ -125,20 +125,23 @@ public class NewTradActivity extends Activity {
             AppConstants.tid=Jobj.getString("tid");
             Log.i("ssssstid",AppConstants.tid);
             mbitmap=EncodeQR.Create2DCode(AppConstants.tid);
-            QRcodeFragment qRcodeFragment=new QRcodeFragment();
-
-
-
 
             StringRequest strrequest=new StringRequest(Request.Method.POST,"http://104.160.39.34:8000/storerecord/",new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     try {
                         JSONObject Jobj = new JSONObject(response);
-                        Log.i("ssssssssssss",response+"_____"+Jobj.getString("Status"));
+                        Log.i("ssssssssssss",response+"_____"+Jobj.getString("Stutas"));
 
-                        if(Jobj.getString("Status").compareTo("0")==0){
-
+                        if(Jobj.getString("Stutas").compareTo("0")==0){
+                            QRcodeFragment qRcodeFragment=new QRcodeFragment();
+                            FragmentManager fragmentManager=getFragmentManager();
+                            FragmentTransaction transaction=fragmentManager.beginTransaction();
+                            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                            transaction.replace(R.id.newtradeinfo,qRcodeFragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                            qRcodeFragment.setimg(mbitmap);
                         }
                     }catch (Exception e){}
                 }
@@ -152,25 +155,20 @@ public class NewTradActivity extends Activity {
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Log.i("stid",AppConstants.tid);
                     HashMap<String,String> map=new HashMap<String, String>();
-                    map.put("uid","04");
+                    map.put("uid",AppConstants.UID);
                     map.put("cid","01");
-                    map.put("tid","41138");
+                    map.put("tid",AppConstants.tid);
                     map.put("amount","300");
                     map.put("yourcardname","testmain");
                     map.put("yourcardnumber","6217870700000000001");
-                    map.put("in_out","in");
+                    map.put("in_out","1");
                     map.put("way","1");
+                    Log.i("stid",map.toString());
                     return map;
                 }
             };
             queue.add(strrequest);
-            FragmentManager fragmentManager=getFragmentManager();
-            FragmentTransaction transaction=fragmentManager.beginTransaction();
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            transaction.replace(R.id.newtradeinfo,qRcodeFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-            qRcodeFragment.setimg(mbitmap);
+
         }catch (Exception e){}
 
 

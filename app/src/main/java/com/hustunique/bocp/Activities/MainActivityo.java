@@ -130,35 +130,6 @@ public class MainActivityo extends IndicatorFragmentActivity {
             tintManager.setTintColor(actionBarColor);
         }
 
-        //startActivity(intent);
-      /*  BalanceCriteria balanceCriteria=new BalanceCriteria();
-        balanceCriteria.setUserid("cary32_test_391");
-        balanceCriteria.setLmtamt("2014091500000615");
-        creditbalsearch(MainActivityo.this,balanceCriteria,new ResponseListener() {
-            @Override
-            public void onComplete(ResponseBean responseBean) {
-                //Log.i("response result",responseBean.getRtnmsg());
-            }
-
-            @Override
-            public void onException(Exception e) {
-
-            }
-
-            @Override
-            public void onError(Error error) {
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-        });
-            */
-
-        Creditbalsearch();
-
         {
             FrameLayout frameLayout = (FrameLayout) findViewById(R.id.btn_options);
             mainframe=(FrameLayout)findViewById(R.id.main_framelayout);
@@ -375,68 +346,25 @@ public class MainActivityo extends IndicatorFragmentActivity {
         @Override
         public void onClick(View v) {
             promotedActionsLibrary.closepopup();
-           // Intent intent=new Intent(MainActivityo.this,PayActivity.class);
-            //startActivity(intent);
-            RequestQueue requestQueue=Volley.newRequestQueue(MainActivityo.this);
-            HashMap<String,String> map=new HashMap<String, String>();
-            map.put("userid","cary32_test_391");
-            map.put("accno","");
-            map.put("alias","");
-            map.put("trntyp","");
-            map.put("ifncal","");
-            map.put("pageno","1");
-          //  map.put("limitamt","2014091500000615");
-            JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST,Constants.httpPrefix+"/debit/appfindusrinfo",new JSONObject(map),new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        Log.i("sssstrade",response.toString());
-                        Toast.makeText(MainActivityo.this,response.toString(),Toast.LENGTH_LONG).show();
-                    }catch (Exception e){}
+            Intent intent=new Intent(MainActivityo.this,PayActivity.class);
+            startActivity(intent);
 
-                }
-            },new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                        Log.i("ssssserror",error.getMessage());
-                }
-            }){
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-                    map.put("clentid", AppInfo.getAppKeyValue());
-
-                    Oauth2AccessToken accessToken = AccessTokenKeeper
-                            .readAccessToken(BOCOPPayApi.getContext());
-                    String mUserId = accessToken.getUserId();
-                    String token = accessToken.getToken();
-//		String token = "87a3ff45-24e0-4758-b7d9-c72e5283569d";
-                    if (!StringUtil.isNullOrEmpty(mUserId)) {
-                        map.put("userid", mUserId);
-                    }
-
-                    if (!StringUtil.isNullOrEmpty(token)) {
-                        map.put("acton", token);
-                    }
-
-                    map.put("chnflg", "1");
-
-                    SimpleDateFormat format = new SimpleDateFormat("yyyyMMDD");
-                    // 获取当前时间
-                    String nowData = format.format(new Date(System.currentTimeMillis()));
-                    map.put("trandt", nowData);
-
-                    SimpleDateFormat formatTime = new SimpleDateFormat("HHmmss");
-                    // 获取当前时间
-                    String nowTime = formatTime
-                            .format(new Date(System.currentTimeMillis()));
-                    map.put("trantm", nowTime);
-                    return map;
-                }
-            };
-
-            requestQueue.add(jsonObjectRequest);
         }
+    }
+
+    class Onpopupitemclicklistener2 implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            promotedActionsLibrary.closepopup();
+            Intent intent=new Intent(MainActivityo.this,MipcaActivityCapture.class);
+            startActivity(intent);
+
+        }
+    }
+
+    public static void commoncardtransfer(Context context,ContactTransCriteria criteria, ResponseListener listener) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(Constants.httpPrefix + "/base/asr/cardtransfer", BaseService.genPublicAsrHeader(context), criteria, new JsonResponseListenerAdapterHandler<Fund900Response>(Fund900Response.class, listener));
     }
 
     @Override
@@ -452,51 +380,109 @@ public class MainActivityo extends IndicatorFragmentActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    class Onpopupitemclicklistener2 implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
-            promotedActionsLibrary.closepopup();
-           // Intent intent=new Intent(MainActivityo.this,MipcaActivityCapture.class);
-            //startActivity(intent);
-            RequestQueue requestQueue=Volley.newRequestQueue(MainActivityo.this);
-            HashMap<String,String> map=new HashMap<String, String>();
-            map.put("userid","cary32_test_391");
-           // map.put("lmtamtout",)
-            map.put("lmtamtout","2014092200000923");
-            map.put("cardnumin","6217870700000000001");
-            map.put("amount","200");
-            map.put("currency","001");
-            map.put("username","zhangsan");
-            //post("http://openapi.boc.cn/bocop/base/asr/cardtransfer",BaseService.genPublicAsrHeader(MainActivityo.this),map,);
-            JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST,Constants.httpPrefix + "/base/asr/cardtransfer",new JSONObject(map),new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        Log.i("sssstttttttt",response.toString());
-                        //Toast.makeText(MainActivityo.this,response.getString("balance"),Toast.LENGTH_LONG).show();
-                    }catch (Exception e){}
 
-                }
-            },new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                        Log.i("respon",error.toString());
-                }
-            }){
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    return BaseService.genPublicAsrHeader(MainActivityo.this);
-                }
-            };
+    public void appfindusrinfo(){
+        RequestQueue requestQueue=Volley.newRequestQueue(MainActivityo.this);
+        HashMap<String,String> map=new HashMap<String, String>();
+        map.put("userid","cary32_test_391");
+        map.put("accno","");
+        map.put("alias","");
+        map.put("trntyp","");
+        map.put("ifncal","");
+        map.put("pageno","1");
+        //  map.put("limitamt","2014091500000615");
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST,Constants.httpPrefix+"/debit/appfindusrinfo",new JSONObject(map),new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Log.i("sssstrade",response.toString());
+                    Toast.makeText(MainActivityo.this,response.toString(),Toast.LENGTH_LONG).show();
+                }catch (Exception e){}
 
-            requestQueue.add(jsonObjectRequest);
-            ContactTransCriteria criteria=new ContactTransCriteria();
-            criteria.setUserid("cary32_test_391");
-            criteria.setAmount("300");
-            criteria.setCardnumin("6217870700000000001");
-            criteria.setCurrency("001");
-            criteria.setUsername("zhangsan");
-            criteria.setLmtamtout("2014092200000923");
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("ssssserror",error.getMessage());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+                map.put("clentid", AppInfo.getAppKeyValue());
+
+                Oauth2AccessToken accessToken = AccessTokenKeeper
+                        .readAccessToken(BOCOPPayApi.getContext());
+                String mUserId = accessToken.getUserId();
+                String token = accessToken.getToken();
+//		String token = "87a3ff45-24e0-4758-b7d9-c72e5283569d";
+                if (!StringUtil.isNullOrEmpty(mUserId)) {
+                    map.put("userid", mUserId);
+                }
+
+                if (!StringUtil.isNullOrEmpty(token)) {
+                    map.put("acton", token);
+                }
+
+                map.put("chnflg", "1");
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMDD");
+                // 获取当前时间
+                String nowData = format.format(new Date(System.currentTimeMillis()));
+                map.put("trandt", nowData);
+
+                SimpleDateFormat formatTime = new SimpleDateFormat("HHmmss");
+                // 获取当前时间
+                String nowTime = formatTime
+                        .format(new Date(System.currentTimeMillis()));
+                map.put("trantm", nowTime);
+                return map;
+            }
+        };
+
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void cardtransfer(){
+        RequestQueue requestQueue=Volley.newRequestQueue(MainActivityo.this);
+        HashMap<String,String> map=new HashMap<String, String>();
+        map.put("userid","cary32_test_391");
+        // map.put("lmtamtout",)
+        map.put("lmtamtout","2014092200000923");
+        map.put("cardnumin","6217870700000000001");
+        map.put("amount","200");
+        map.put("currency","001");
+        map.put("username","zhangsan");
+        //post("http://openapi.boc.cn/bocop/base/asr/cardtransfer",BaseService.genPublicAsrHeader(MainActivityo.this),map,);
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST,Constants.httpPrefix + "/base/asr/cardtransfer",new JSONObject(map),new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Log.i("sssstttttttt",response.toString());
+                    //Toast.makeText(MainActivityo.this,response.getString("balance"),Toast.LENGTH_LONG).show();
+                }catch (Exception e){}
+
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("respon",error.toString());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return BaseService.genPublicAsrHeader(MainActivityo.this);
+            }
+        };
+
+        requestQueue.add(jsonObjectRequest);
+        ContactTransCriteria criteria=new ContactTransCriteria();
+        criteria.setUserid("cary32_test_391");
+        criteria.setAmount("300");
+        criteria.setCardnumin("6217870700000000001");
+        criteria.setCurrency("001");
+        criteria.setUsername("zhangsan");
+        criteria.setLmtamtout("2014092200000923");
             /*commoncardtransfer(MainActivityo.this, criteria, new ResponseListener() {
                 @Override
                 public void onComplete(ResponseBean responseBean) {
@@ -519,12 +505,5 @@ public class MainActivityo extends IndicatorFragmentActivity {
                 }
             });
                 */
-        }
     }
-
-    public static void commoncardtransfer(Context context,ContactTransCriteria criteria, ResponseListener listener) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.post(Constants.httpPrefix + "/base/asr/cardtransfer", BaseService.genPublicAsrHeader(context), criteria, new JsonResponseListenerAdapterHandler<Fund900Response>(Fund900Response.class, listener));
-    }
-
 }

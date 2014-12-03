@@ -13,6 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.hustunique.bocp.R;
+import com.hustunique.bocp.Utils.views.ProgressWebView;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 /**
@@ -39,7 +40,7 @@ public class RegistActivity extends Activity {
 
         WebView mwebview=(WebView)findViewById(R.id.registwebview);
        // WebViewClient client=new WebViewClient();
-       /* mwebview.setWebViewClient(new WebViewClient(){
+       mwebview.setWebViewClient(new WebViewClient(){
             ProgressDialog progDlg=null;
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -58,11 +59,11 @@ public class RegistActivity extends Activity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                Log.i("sssssssssssss","webview");
-                view.loadUrl("https://open.boc.cn/wap/register.php");
+                view.loadUrl(url);
                 return false;
             }
-        });*/
+        });
+        mwebview.getSettings().setJavaScriptEnabled(true);
         mwebview.loadUrl("https://open.boc.cn/wap/register.php");
     }
 }
