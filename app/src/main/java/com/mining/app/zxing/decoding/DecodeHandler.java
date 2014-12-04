@@ -22,15 +22,14 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-
+import com.hustunique.bocp.R;
+import com.hustunique.bocp.Activities.MipcaActivityCapture;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.MultiFormatReader;
 import com.google.zxing.ReaderException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
-import com.hustunique.bocp.Activities.MipcaActivityCapture;
-import com.hustunique.bocp.R;
 import com.mining.app.zxing.camera.CameraManager;
 import com.mining.app.zxing.camera.PlanarYUVLuminanceSource;
 

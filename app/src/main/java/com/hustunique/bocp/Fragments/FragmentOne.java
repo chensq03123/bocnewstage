@@ -70,8 +70,8 @@ public class FragmentOne extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map=new HashMap<String, String>();
-                map.put("uid","5");
-                map.put("cid","2");
+                map.put("uid","4");
+                map.put("cid","1");
                 map.put("period","2");
                 return map;
             }

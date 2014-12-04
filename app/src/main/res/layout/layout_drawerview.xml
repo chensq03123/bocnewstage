@@ -59,50 +59,93 @@
         android:layout_height="wrap_content">
         </ListView>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:background="#ddd"
-            android:orientation="vertical">
-          <ImageView
-              android:layout_width="match_parent"
-              android:layout_height="1dp"
-              android:background="#999"/>
+            android:orientation="vertical"
+            android:id="@+id/aboutus">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#bbb"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:background="@drawable/linearlayoutselector"
+                android:focusable="true"
+                android:clickable="true"
                 android:orientation="horizontal">
-            <ImageView
-                android:layout_marginLeft="16dp"
-                android:layout_gravity="center_vertical"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/logou"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:textColor="#999"
-                android:textSize="16sp"
-                android:layout_marginLeft="22dp"
-                android:text="@string/str_logout"/>
+                <ImageView
+                    android:layout_marginLeft="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/logou"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textColor="#999"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="22dp"
+                    android:text="关于我们"
+                   />
             </LinearLayout>
-          </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#ddd"
-        android:orientation="vertical">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#999"/>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/linearlayoutselector"
+            android:focusable="true"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:id="@+id/feedback">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#bbb"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_marginLeft="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/logou"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textColor="#999"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="22dp"
+                    android:text="意见反馈"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/linearlayoutselector"
+        android:focusable="true"
+        android:clickable="true"
+        android:orientation="vertical"
+            android:id="@+id/logout_layout">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#bbb"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
             android:orientation="horizontal">
             <ImageView
                 android:layout_marginLeft="16dp"
@@ -112,75 +155,14 @@
                 android:src="@drawable/logou"/>
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:textColor="#999"
                 android:textSize="16sp"
                 android:layout_marginLeft="22dp"
-                android:text="@string/str_logout"/>
+                android:text="@string/str_logout"
+                 />
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#ddd"
-        android:orientation="vertical">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#999"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_marginLeft="16dp"
-                android:layout_gravity="center_vertical"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/logou"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:textColor="#999"
-                android:textSize="16sp"
-                android:layout_marginLeft="22dp"
-                android:text="@string/str_logout"/>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#ddd"
-        android:orientation="vertical">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#999"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_marginLeft="16dp"
-                android:layout_gravity="center_vertical"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/logou"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:textColor="#999"
-                android:textSize="16sp"
-                android:layout_marginLeft="22dp"
-                android:text="@string/str_logout"/>
-        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

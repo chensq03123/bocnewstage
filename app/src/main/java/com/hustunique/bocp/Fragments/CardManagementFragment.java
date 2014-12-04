@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import com.hustunique.bocp.Activities.AccountSettingActivity;
 import com.hustunique.bocp.Adapters.CardsExpandableListAdapter;
 import com.hustunique.bocp.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,6 +26,8 @@ public class CardManagementFragment extends Fragment {
 
     private Context mcontext;
     private final String[] options={"删除卡片","编辑卡片","交易记录","查询余额"};
+    List<Map<String,Object>> mlist;
+
 
     public CardManagementFragment(){
         super();
@@ -38,16 +42,16 @@ public class CardManagementFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        ArrayList<Map<String,String>> defaultlist=new ArrayList<Map<String, String>>();
+        ArrayList<Map<String,Object>> defaultlist=new ArrayList<Map<String, Object>>();
         HashMap<String,String> map=new HashMap<String,String>();
-        defaultlist.add(map);
-        final ArrayList<Map<String,String>> mlist=new ArrayList<Map<String, String>>();
-        for (int i=0;i<8;i++){
-            HashMap<String,String> map1=new HashMap<String,String>();
-            mlist.add(map1);
-        }
+        //defaultlist.add(map);
 
-
+       // for (int i=0;i<8;i++){
+         //   HashMap<String,String> map1=new HashMap<String,String>();
+           // mlist.add(map1);
+        //}
+        defaultlist.add(((AccountSettingActivity)getActivity()).getcardlist().get(0));//()(((AccountSettingActivity)getActivity()).getcardlist().get(0));
+        mlist=((AccountSettingActivity)getActivity()).getcardlist();
         View view=inflater.inflate(R.layout.fragment_cardsmanagement,null);
         ExpandableListView defaultcar=(ExpandableListView)view.findViewById(R.id.defaultcard);
         ExpandableListView cardslist=(ExpandableListView)view.findViewById(R.id.cardslist);

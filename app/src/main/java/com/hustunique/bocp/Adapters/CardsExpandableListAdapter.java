@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.hustunique.bocp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -21,11 +22,11 @@ import java.util.Map;
  */
 public class CardsExpandableListAdapter extends BaseExpandableListAdapter {
 
-    ArrayList<Map<String,String>> mparentlist;
+    List<Map<String,Object>> mparentlist;
     String[] childlist;
     Context mcontext;
 
-    public CardsExpandableListAdapter(Context context,ArrayList<Map<String,String>> parentlist,String[] childlist){
+    public CardsExpandableListAdapter(Context context,List<Map<String,Object>> parentlist,String[] childlist){
         this.mcontext=context;
         this.childlist=childlist;
         this.mparentlist=parentlist;
@@ -88,7 +89,7 @@ public class CardsExpandableListAdapter extends BaseExpandableListAdapter {
             convertView.setTag(holder);
         }else
             holder=(ViewHolder)convertView.getTag();
-
+        holder.carsubname.setText(mparentlist.get(groupPosition).get("alias").toString());
         return convertView;
     }
 

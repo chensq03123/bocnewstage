@@ -6,6 +6,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,7 @@ import com.balysv.materialmenu.MaterialMenu;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.MaterialMenuView;
 import com.boc.bocop.sdk.BOCOPPayApi;
+import com.boc.bocop.sdk.api.bean.AppInfo;
 import com.boc.bocop.sdk.api.bean.ResponseBean;
 import com.boc.bocop.sdk.api.bean.fund.Fund900Response;
 import com.boc.bocop.sdk.api.bean.oauth.BOCOPOAuthInfo;
@@ -39,18 +42,23 @@ import com.boc.bocop.sdk.http.JsonResponseListenerAdapterHandler;
 import com.boc.bocop.sdk.http.RequestParams;
 import com.boc.bocop.sdk.service.BaseService;
 import com.boc.bocop.sdk.util.AccessTokenKeeper;
+import com.boc.bocop.sdk.util.Oauth2AccessToken;
 import com.boc.bocop.sdk.util.ParaType;
+import com.boc.bocop.sdk.util.StringUtil;
 import com.hustunique.bocp.Fragments.CardManagementFragment;
 import com.hustunique.bocp.R;
 import com.hustunique.bocp.Utils.AppConstants;
+import com.hustunique.bocp.Utils.JSON2LIST;
 import com.hustunique.bocp.Utils.gesturepasswd.LockPatternView;
 import com.hustunique.bocp.Utils.views.MaterialEditText;
 
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -69,6 +77,28 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
     private ImageView addcardbtn;
     final String ADDCARDURL="https://openapi.boc.cn/app/adduserinfo";
     private RequestQueue queue;
+    private SharedPreferences sharedPreferences;
+    private List<Map<String,Object>> mcardlist;
+
+    private Handler mhandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what==1){
+                sharedPreferences=getSharedPreferences("BOCP_APP",MODE_PRIVATE);
+                boolean isfirstquerycard=sharedPreferences.getBoolean("BOCP_CARD_TAG",true);
+                if(isfirstquerycard){
+                    for(int i=0;i<mcardlist.size();i++){
+                        Addnewcard(mcardlist.get(i));
+                    }
+                    sharedPreferences.edit().putBoolean("BOCP_CARD_TAG",false);
+                }
+            }
+        }
+    };
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +106,9 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
         setContentView(R.layout.layout_accountsetting);
         queue = Volley.newRequestQueue(AccountSettingActivity.this);
         InitWidgets();
+
+        appfindusrinfo();
+
 
        /* AccountsettingFragment asfragment=new AccountsettingFragment();
         FragmentManager fragmentManager=getFragmentManager();
@@ -132,8 +165,6 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
                     public void onClick(View v) {
                         String cardnumstr=cardnum.getText().toString();
                         String subnamestr=subname.getText().toString();
-
-                        Addnewcard("6217870700000000001","testcard","snowlovegood_test_408");
                         Toast.makeText(AccountSettingActivity.this,"clisk",Toast.LENGTH_LONG).show();
                     }
                 });
@@ -262,9 +293,8 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
         bd.create().show();
     }
 
-    private void Addnewcard(String cardnum,String subname,String userid){
-
-
+    private void Addnewcard(Map<String,Object> map){
+        final Map<String,Object> mapt=map;
         StringRequest stringRequest=new StringRequest(Request.Method.POST,"http://104.160.39.34:8000/requestcid/",new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -285,36 +315,15 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> hashMap=new HashMap<String, String>();
                 hashMap.put("uid",AppConstants.UID);
-                hashMap.put("cardname","testmain");
-                hashMap.put("cardnumber","6217870700000000001");
-                hashMap.put("limitmoney","1000");
+                hashMap.put("cardname",mapt.get("alias").toString());
+                hashMap.put("cardnumber",mapt.get("accno").toString());
+                hashMap.put("limitamt",mapt.get("lmtamt").toString());
+                hashMap.put("limitmoney","5000");
+                Log.i("addcardparams",hashMap.toString());
                 return hashMap;
             }
         };
         queue.add(stringRequest);
-        LinkedHashMap<String,String> param=new LinkedHashMap<String, String>();
-        param.put("USRID",userid);
-        param.put("ACCNO",cardnum);
-        param.put("ALIAS",subname);
-        LinkedHashMap<String,String> header= BaseService.genPublicAsrHeader(BOCOPPayApi.getContext());
-
-        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.PUT, "https://openapi.boc.cn/app/adduserinfo",new JSONObject(param),new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.i("newcardrep",response.toString());
-            }
-        },new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return BaseService.genPublicAsrHeader(AccountSettingActivity.this);
-            }
-        };
-        queue.add(jsonObjectRequest);
     }
 
     public void put(String url, LinkedHashMap<String, String> header,
@@ -345,4 +354,75 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
             case R.id.setting_remainalarm:Remainalarm();break;
         }
     }
+
+
+    public void appfindusrinfo(){
+        //RequestQueue requestQueue=Volley.newRequestQueue(AccountSettingActivity.this);
+        HashMap<String,String> map=new HashMap<String, String>();
+        map.put("userid","cary32_test_391");
+        map.put("accno","");
+        map.put("alias","");
+        map.put("trntyp","");
+        map.put("ifncal","");
+        map.put("pageno","1");
+        //  map.put("limitamt","2014091500000615");
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST,Constants.httpPrefix+"/debit/appfindusrinfo",new JSONObject(map),new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                   // Log.i("sssstrade",response.toString());
+                     mcardlist=JSON2LIST.getList(response.getString("saplist"));
+                    mhandler.obtainMessage(1,null).sendToTarget();
+                    Log.i("sssstrade",mcardlist.get(0).toString());
+                   // Toast.makeText(AccountSettingActivity.this,response.toString(),Toast.LENGTH_LONG).show();
+                }catch (Exception e){}
+
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("ssssserror",error.getMessage());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+                map.put("clentid", AppInfo.getAppKeyValue());
+
+                Oauth2AccessToken accessToken = AccessTokenKeeper
+                        .readAccessToken(BOCOPPayApi.getContext());
+                String mUserId = accessToken.getUserId();
+                String token = accessToken.getToken();
+//		String token = "87a3ff45-24e0-4758-b7d9-c72e5283569d";
+                if (!StringUtil.isNullOrEmpty(mUserId)) {
+                    map.put("userid", mUserId);
+                }
+
+                if (!StringUtil.isNullOrEmpty(token)) {
+                    map.put("acton", token);
+                }
+
+                map.put("chnflg", "1");
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMDD");
+                // 获取当前时间
+                String nowData = format.format(new Date(System.currentTimeMillis()));
+                map.put("trandt", nowData);
+
+                SimpleDateFormat formatTime = new SimpleDateFormat("HHmmss");
+                // 获取当前时间
+                String nowTime = formatTime
+                        .format(new Date(System.currentTimeMillis()));
+                map.put("trantm", nowTime);
+                return map;
+            }
+        };
+
+        queue.add(jsonObjectRequest);
+    }
+
+    public List<Map<String,Object>> getcardlist(){
+        return mcardlist;
+    }
+
 }

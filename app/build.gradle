@@ -31,3 +31,7 @@ android {
         compile files('libs/bocopAndroidSDK.jar')
     }
 }
+
+dependencies {
+    compile files('libs/picasso-2.4.0.jar')
+}

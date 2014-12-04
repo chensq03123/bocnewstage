@@ -130,6 +130,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
             tintManager.setTintColor(actionBarColor);
         }
 
+
         {
             FrameLayout frameLayout = (FrameLayout) findViewById(R.id.btn_options);
             mainframe=(FrameLayout)findViewById(R.id.main_framelayout);
@@ -148,6 +149,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
         uid=getIntent().getStringExtra("UID");
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        InitDrawsetting();
         mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -323,6 +325,24 @@ public class MainActivityo extends IndicatorFragmentActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
+    private void InitDrawsetting(){
+        LinearLayout logout,aboutus,feedback;
+        logout=(LinearLayout)findViewById(R.id.logout_layout);
+        aboutus=(LinearLayout)findViewById(R.id.aboutus);
+        feedback=(LinearLayout)findViewById(R.id.feedback);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logoutApp();
+                Intent intent=new Intent(MainActivityo.this,LoginActivity.class);
+                intent.putExtra("ACTION_LOGOUT","LOGOUT");
+                startActivity(intent);
+                MainActivityo.this.finish();
+            }
+        });
+    }
+
     public static int generateState(int previous) {
         int generated = new Random().nextInt(4);
         return generated != previous ? generated : generateState(previous);
@@ -357,8 +377,22 @@ public class MainActivityo extends IndicatorFragmentActivity {
         public void onClick(View v) {
             promotedActionsLibrary.closepopup();
             Intent intent=new Intent(MainActivityo.this,MipcaActivityCapture.class);
-            startActivity(intent);
+            startActivityForResult(intent,AppConstants.REQUEST_CODE);
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==AppConstants.REQUEST_CODE){
+           if(resultCode==RESULT_OK){
+             String isbncode=data.getStringExtra("result");
+           Log.i("qrcode",isbncode);
+            Intent intent=new Intent(MainActivityo.this,PayActivity.class);
+            intent.putExtra("QR_TID",isbncode);
+              startActivity(intent);
+         }
         }
     }
 
@@ -378,69 +412,6 @@ public class MainActivityo extends IndicatorFragmentActivity {
         }
 
         return super.onKeyDown(keyCode, event);
-    }
-
-
-    public void appfindusrinfo(){
-        RequestQueue requestQueue=Volley.newRequestQueue(MainActivityo.this);
-        HashMap<String,String> map=new HashMap<String, String>();
-        map.put("userid","cary32_test_391");
-        map.put("accno","");
-        map.put("alias","");
-        map.put("trntyp","");
-        map.put("ifncal","");
-        map.put("pageno","1");
-        //  map.put("limitamt","2014091500000615");
-        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST,Constants.httpPrefix+"/debit/appfindusrinfo",new JSONObject(map),new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    Log.i("sssstrade",response.toString());
-                    Toast.makeText(MainActivityo.this,response.toString(),Toast.LENGTH_LONG).show();
-                }catch (Exception e){}
-
-            }
-        },new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("ssssserror",error.getMessage());
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-                map.put("clentid", AppInfo.getAppKeyValue());
-
-                Oauth2AccessToken accessToken = AccessTokenKeeper
-                        .readAccessToken(BOCOPPayApi.getContext());
-                String mUserId = accessToken.getUserId();
-                String token = accessToken.getToken();
-//		String token = "87a3ff45-24e0-4758-b7d9-c72e5283569d";
-                if (!StringUtil.isNullOrEmpty(mUserId)) {
-                    map.put("userid", mUserId);
-                }
-
-                if (!StringUtil.isNullOrEmpty(token)) {
-                    map.put("acton", token);
-                }
-
-                map.put("chnflg", "1");
-
-                SimpleDateFormat format = new SimpleDateFormat("yyyyMMDD");
-                // 获取当前时间
-                String nowData = format.format(new Date(System.currentTimeMillis()));
-                map.put("trandt", nowData);
-
-                SimpleDateFormat formatTime = new SimpleDateFormat("HHmmss");
-                // 获取当前时间
-                String nowTime = formatTime
-                        .format(new Date(System.currentTimeMillis()));
-                map.put("trantm", nowTime);
-                return map;
-            }
-        };
-
-        requestQueue.add(jsonObjectRequest);
     }
 
     public void cardtransfer(){
@@ -505,5 +476,13 @@ public class MainActivityo extends IndicatorFragmentActivity {
                 }
             });
                 */
+    }
+
+
+    public void logoutApp() {
+        BOCOPPayApi bocopSDKApi = BOCOPPayApi.getInstance(MainActivityo.this,
+                "284", "78b930ce450d19747e8cf16e190cc975e96775f9cac6cc12c4");
+        bocopSDKApi.delOAuthorize(MainActivityo.this);
+        //清空用户及token缓存
     }
 }

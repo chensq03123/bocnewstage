@@ -1,5 +1,7 @@
 package com.hustunique.bocp.Utils;
 
+import android.graphics.Color;
+
 import com.hustunique.bocp.R;
 
 /**
@@ -17,4 +19,7 @@ public class AppConstants {
     public static String tid;
     public  final static String STR_PROTILE="STR_PROTITLE";
     public final static String STR_PROURL="STR_PROURL";
+    public static int REQUEST_CODE=1;
+    public static int in_color= Color.rgb(0xef,0x53,0x50);
+    public static int out_color=Color.rgb(0x44,0x8A,0xFF);
 }

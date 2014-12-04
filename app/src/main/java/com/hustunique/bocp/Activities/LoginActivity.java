@@ -73,6 +73,9 @@ public class LoginActivity extends Activity {
             if(msg.what==1){
                Toast.makeText(LoginActivity.this,msg.obj.toString(),Toast.LENGTH_LONG).show();
                 final String uid=msg.obj.toString();
+                Intent intent=new Intent(LoginActivity.this,MainActivityo.class);
+                intent.putExtra("UID",uid);
+                startActivity(intent);
                 RequestQueue queue= Volley.newRequestQueue(LoginActivity.this);
                 StringRequest stringRequest=new StringRequest(Request.Method.POST,"http://104.160.39.34:8000/requestuid/",new Response.Listener<String>() {
                     @Override
@@ -95,7 +98,7 @@ public class LoginActivity extends Activity {
                         return params;
                     }
                 };
-                queue.add(stringRequest);
+                //queue.add(stringRequest);
 
             }else if(msg.what==0){
                 Toast.makeText(LoginActivity.this,msg.obj.toString(),Toast.LENGTH_LONG).show();
@@ -121,57 +124,13 @@ public class LoginActivity extends Activity {
           public void onComplete(ResponseBean response) {
               // 这是登陆成功回调
               BOCOPOAuthInfo info = (BOCOPOAuthInfo) response;
-              Log.i("result", info.getAccess_token() + "_____" + info.getRefresh_token());
-              //OAuthService.getOAuthToken().setToken(info.getAccess_token());
-              //  NetworkConstant.access_token = info.getAccess_token();// 登录成功产生的token
-              //NetworkConstant.userid = info.getUserId();// 登录的用户名
-              // AccessTokenKeeper.keepAccessToken(LoginActivity.this,info.getAccess_token());
               mhandler.obtainMessage(1, info.getUserId()).sendToTarget();
-              // bocopSDKApi.Addnewcard(LoginActivity.this,"5765825000366567638","testcard","snowlovegood_test_408");
           }
 
           @Override
           public void onCancel() {
           }
       });
-      /*   bocopSDKApi.authorizeNoDialog(LoginActivity.this,"snowlovegood_test_408","111111",new SipBox(LoginActivity.this),new ResponseListener() {
-            @Override
-            public void onComplete(ResponseBean responseBean) {
-                BOCOPOAuthInfo info = (BOCOPOAuthInfo) responseBean;
-                Log.i("result",info.getAccess_token()+"_____"+info.getRefresh_token());
-                //OAuthService.getOAuthToken().setToken(info.getAccess_token());
-                //  NetworkConstant.access_token = info.getAccess_token();// 登录成功产生的token
-                //NetworkConstant.userid = info.getUserId();// 登录的用户名
-                // AccessTokenKeeper.keepAccessToken(LoginActivity.this,info.getAccess_token());
-                mhandler.obtainMessage(1,info.getUserId()).sendToTarget();
-            }
-
-            @Override
-            public void onException(Exception e) {
-
-            }
-
-            @Override
-            public void onError(Error error) {
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-        });*/
-
-    }
-
-
-
-
-    public void logoutApp() {
-        BOCOPPayApi bocopSDKApi = BOCOPPayApi.getInstance(LoginActivity.this,
-                "284", "78b930ce450d19747e8cf16e190cc975e96775f9cac6cc12c4");
-        bocopSDKApi.delOAuthorize(LoginActivity.this);
-        //清空用户及token缓存
     }
 
     @Override

@@ -4,10 +4,8 @@
     android:paddingLeft="@dimen/tradeitem_padding"
     android:paddingRight="@dimen/tradeitem_padding"
     android:paddingTop="8dp"
-
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:orientation="vertical">
     <LinearLayout
         android:background="@drawable/cornorbottome"
@@ -24,10 +22,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
     <LinearLayout
+        android:id="@+id/titlebarlayout"
         android:background="@drawable/tradeitemcorner"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-
         android:orientation="horizontal"
       >
             <TextView
@@ -35,9 +33,17 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:textSize="13sp"
+                android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
                 android:text="星巴克光谷世界城三期分店"/>
+        <ImageView
+            android:id="@+id/tradein_out"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginRight="16dp"
+            android:layout_gravity="right|center_vertical"
+            android:src="@drawable/in"/>
         </LinearLayout>
 
         <LinearLayout
@@ -72,6 +78,7 @@
                     android:textColor="#666"
                     android:text="@string/rmb"/>
                     <TextView
+                        android:id="@+id/tradecost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"

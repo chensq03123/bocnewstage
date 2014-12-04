@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hustunique.bocp.R;
+import com.hustunique.bocp.Utils.AppConstants;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -48,14 +49,29 @@ public class TradeRecordBaseAdapter extends BaseAdapter {
         if(convertView==null){
             mholder=new ViewHolder();
             convertView=(LinearLayout)LayoutInflater.from(mcontext).inflate(R.layout.item_traderecord,null);
+            mholder.img=(ImageView)convertView.findViewById(R.id.tradein_out);
+            mholder.titlebar=(LinearLayout)convertView.findViewById(R.id.titlebarlayout);
+            mholder.cost=(TextView)convertView.findViewById(R.id.tradecost);
             convertView.setTag(mholder);
         }else{
             mholder=(ViewHolder)convertView.getTag();
         }
+
+        float cost=30.0f*(position%5+1);
+        mholder.cost.setText(String.valueOf(cost));
+        if(position%3==0){
+            mholder.img.setImageResource(R.drawable.out);
+            mholder.titlebar.setBackgroundColor(AppConstants.out_color);
+        }else{
+            mholder.img.setImageResource(R.drawable.in);
+            mholder.titlebar.setBackgroundColor(AppConstants.in_color);
+        }
+
         return convertView;
     }
 
     private class ViewHolder{
+        LinearLayout titlebar;
         ImageView img;
         TextView cost,carttype,tradetype,tradedate,tradetime;
     }

@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import com.balysv.materialmenu.MaterialMenu;
 import com.balysv.materialmenu.MaterialMenuDrawable;
@@ -51,7 +52,8 @@ public class ProductDetailActivity extends Activity {
         Intent intent=getIntent();
         String title=intent.getStringExtra(AppConstants.STR_PROTILE);
         String url=intent.getStringExtra(AppConstants.STR_PROURL);
-
+        TextView titleview=(TextView)findViewById(R.id.product_title);
+        titleview.setText(title);
         WebView mwebview=(WebView)findViewById(R.id.product_webview);
         mwebview.setWebViewClient(new WebViewClient(){
             ProgressDialog progDlg=null;

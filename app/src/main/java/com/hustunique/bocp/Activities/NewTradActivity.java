@@ -23,6 +23,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.balysv.materialmenu.MaterialMenuDrawable;
+import com.balysv.materialmenu.MaterialMenuView;
 import com.hustunique.bocp.Fragments.CardManagementFragment;
 import com.hustunique.bocp.Fragments.QRcodeFragment;
 import com.hustunique.bocp.R;
@@ -112,15 +114,18 @@ public class NewTradActivity extends Activity {
                     }
                 };
                 queue.add(stringRequest);
-                /*QRcodeFragment qRcodeFragment=new QRcodeFragment();
-                FragmentManager fragmentManager=getFragmentManager();
-                FragmentTransaction transaction=fragmentManager.beginTransaction();
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                transaction.replace(R.id.newtradeinfo,qRcodeFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();*/
             }
         });
+
+        MaterialMenuView materialMenuView=(MaterialMenuView)findViewById(R.id.newtrade_back);
+        materialMenuView.setState(MaterialMenuDrawable.IconState.ARROW);
+        materialMenuView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewTradActivity.this.finish();
+            }
+        });
+
 
     }
 
@@ -136,7 +141,7 @@ public class NewTradActivity extends Activity {
                 public void onResponse(String response) {
                     try {
                         JSONObject Jobj = new JSONObject(response);
-                        Log.i("ssssssssssss",response+"_____"+Jobj.getString("Stutas"));
+                        Log.i("ssssssssssss",response);
 
                         if(Jobj.getString("Stutas").compareTo("0")==0){
                             QRcodeFragment qRcodeFragment=new QRcodeFragment();
@@ -184,41 +189,4 @@ public class NewTradActivity extends Activity {
         return mbitmap;
     }
 
-    private void httpposthelper (String response) {
-      /*  try {
-            JSONObject Jobj = new JSONObject(response);
-            AppConstants.tid=Jobj.getString("tid");
-            Log.i("ssssstid",AppConstants.tid);
-        }catch (Exception e){}*/
-        String uriAPI = "http://104.160.39.34:8000/storerecord/";
-        /*建立HTTP Post联机*/
-        HttpPost httpRequest = new HttpPost(uriAPI);
-        /*
-         * Post运作传送变量必须用NameValuePair[]数组储存
-        */
-
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("uid",AppConstants.UID));
-        params.add(new BasicNameValuePair("cid",AppConstants.cid));
-        params.add(new BasicNameValuePair("tid",AppConstants.tid));
-        params.add(new BasicNameValuePair("amount","300"));
-        params.add(new BasicNameValuePair("yourcardname","testmain"));
-        params.add(new BasicNameValuePair("yourcardnumber","6217870700000000001"));
-        params.add(new BasicNameValuePair("in_out","in"));
-        params.add(new BasicNameValuePair("way","1"));
-
-        try {
-          /*发出HTTP request*/
-            httpRequest.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
-          /*取得HTTP response*/
-            HttpResponse httpResponse = new DefaultHttpClient().execute(httpRequest);
-            Log.i("sssssssssssss","ssssssssssssss");
-            if(httpResponse.getStatusLine().getStatusCode() == 200) {
-            /*取出响应字符串*/
-                String strResult = EntityUtils.toString(httpResponse.getEntity());
-                Log.i("sssssssssssss",strResult);
-            }
-            } catch (Exception e) {
-        }
-    }
 }

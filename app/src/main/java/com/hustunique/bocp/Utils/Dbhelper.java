@@ -16,7 +16,7 @@ public class Dbhelper {
     public static SQLiteDatabase createorOpenDatabase(){
         SQLiteDatabase sld=null;
         try{
-            sld=SQLiteDatabase.openOrCreateDatabase(path+"/kyapp.db3",null);
+            sld=SQLiteDatabase.openOrCreateDatabase(path+"/bocpus.db3",null);
         }catch(Exception e){e.printStackTrace();}
         return sld;
     }
@@ -24,24 +24,24 @@ public class Dbhelper {
     public static void createTable(){
         SQLiteDatabase sld=createorOpenDatabase();
         try{
-            sld.execSQL("create table if not exists book(id Integer primary key autoincrement not null,"
-                    + "bookname varchar(50) not null,"
-                    +"author varchar(50),"
-                    + "publisher varchar(100),"
-                    + "nofchap Integer,"
-                    + "chapcomp Integer,"
-                    + "color Integer) ");
-            sld.execSQL("create table if not exists chaptable(id Integer primary key autoincrement not null," +
-                    "bookid Integer," +
+            sld.execSQL("create table if not exists ecoproduct(id Integer primary key autoincrement not null,"
+                    + "title varchar(100) not null,"
+                    +"url varchar(100)");
+          /*  sld.execSQL("create table if not exists traderecord(id Integer primary key autoincrement not null," +
+                    " Integer," +
                     "chapname varchar(100)," +
                     "tag Integer," +
-                    "color Integer)");
+                    "color Integer)");*/
 
-            sld.execSQL("create table if not exists maintable(id Integer primary key autoincrement not null," +
-                    "chapname varchar(100)," +
-                    "bookname varchar(100)," +
-                    "chapid Integer," +
-                    "color Integer)");
+            sld.execSQL("create table if not exists users(id Integer primary key autoincrement not null," +
+                    "userid varchar(50)," +
+                    "uidserver varchar(10)");
+            sld.execSQL("create table if not exists cards(id Integer primary key autoincrement not null," +
+                    "uid varchar(100)" +
+                    "alias varchar(50)" +
+                    "accno varchar(20)" +
+                    "limitamt varchar(16)" +
+                    "remain varchar(20)");
 
             sld.close();
         }catch(Exception e){}

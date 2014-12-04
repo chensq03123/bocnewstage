@@ -20,7 +20,7 @@
         android:background="@color/actionbar_color"
         >
         <com.balysv.materialmenu.MaterialMenuView
-            android:id="@+id/accountsetting_menu"
+            android:id="@+id/pay_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"

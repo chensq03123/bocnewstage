@@ -120,7 +120,7 @@ public class FragmentTwo extends Fragment {
         StringRequest stringRequest=new StringRequest(Request.Method.POST,"http://104.160.39.34:8000/queryproducts/",new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("proresponse",response);
+               // Log.i("proresponse",response);
 
                 try {
                     //JSONObject jsonObject=new JSONObject(response);

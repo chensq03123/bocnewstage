@@ -70,6 +70,7 @@
     <orderEntry type="library" exported="" name="android-support-v7-cardview" level="project" />
     <orderEntry type="library" exported="" name="zxing" level="project" />
     <orderEntry type="library" exported="" name="android-support-v7-appcompat" level="project" />
+    <orderEntry type="library" exported="" name="picasso-2.4.0" level="project" />
   </component>
 </module>
 
