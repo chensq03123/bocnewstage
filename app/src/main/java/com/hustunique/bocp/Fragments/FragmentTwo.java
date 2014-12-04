@@ -2,14 +2,18 @@ package com.hustunique.bocp.Fragments;
 
 import android.app.Activity;
 import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -27,9 +31,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.google.gson.JsonObject;
+import com.hustunique.bocp.Activities.ProductDetailActivity;
 import com.hustunique.bocp.Adapters.EcomanagproAdapter;
 import com.hustunique.bocp.R;
 import com.hustunique.bocp.Utils.AppConstants;
+import com.hustunique.bocp.Utils.JSON2LIST;
 import com.hustunique.bocp.Utils.views.view.XListView;
 import com.mining.app.zxing.decoding.Intents;
 
@@ -47,9 +53,53 @@ import java.util.Map;
 public class FragmentTwo extends Fragment {
 
     private Context mcontext;
-    private ArrayList<Map<String,String>> mlistItems;
-    XListView mecmangpro;
-    private Handler mhandler;
+    private List<Map<String,Object>> mlistItems;
+    private XListView mecmangpro;
+    private ProgressDialog progDlg=null;
+    private  EcomanagproAdapter adapter;
+    private Handler mhandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what==2){
+               adapter=new EcomanagproAdapter(mcontext,mlistItems);
+               mecmangpro.setAdapter(adapter);
+                mecmangpro.setPullLoadEnable(true);
+                mecmangpro.setXListViewListener(new XListView.IXListViewListener() {
+                    @Override
+                    public void onRefresh() {
+                        mhandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                onLoad();
+                            }
+                        }, 2000);
+                    }
+
+                    @Override
+                    public void onLoadMore() {
+                        mhandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                onLoad();
+                            }
+                        }, 2000);
+                    }
+                });
+                if (progDlg!=null&&progDlg.isShowing()){
+                    progDlg.dismiss();
+                }
+              // Toast.makeText(mcontext,String.valueOf(mlistItems.size())+ mlistItems.get(0).get("title").toString(),Toast.LENGTH_LONG).show();
+
+            }else if(msg.what==3){
+                if(progDlg == null || !progDlg.isShowing()){
+                    progDlg = new ProgressDialog(getActivity());
+                    progDlg.setMessage("正在加载，请稍候...");
+                }
+                progDlg.show();
+            }
+        }
+    };
 
 
     public FragmentTwo() {
@@ -62,11 +112,10 @@ public class FragmentTwo extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_ecomanapro,null);
-         mecmangpro=(XListView)v.findViewById(R.id.ecomanagprolist);
 
-
+        mecmangpro=(XListView)v.findViewById(R.id.ecomanagprolist);
         RequestQueue queue= Volley.newRequestQueue(mcontext);
         StringRequest stringRequest=new StringRequest(Request.Method.POST,"http://104.160.39.34:8000/queryproducts/",new Response.Listener<String>() {
             @Override
@@ -76,9 +125,10 @@ public class FragmentTwo extends Fragment {
                 try {
                     //JSONObject jsonObject=new JSONObject(response);
                     //AppConstants.cid=jsonObject.getString("cid");
-                    List<Map<String,Object>> list=getList(response);
-                    Log.i("proresponse",String.valueOf(list.size())+list.get(0).toString());
-
+                    mlistItems = JSON2LIST.getList(response);
+                    mlistItems.remove(0);
+                   // Toast.makeText(mcontext,String.valueOf(mlistItems.size())+ mlistItems.get(0).get("title").toString(),Toast.LENGTH_LONG).show();
+                    mhandler.obtainMessage(2,null).sendToTarget();
                 }catch (Exception e){}
                }
         },new Response.ErrorListener() {
@@ -87,8 +137,12 @@ public class FragmentTwo extends Fragment {
 
             }
         }){
+
+
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
+                mhandler.obtainMessage(3,null).sendToTarget();
+
                 HashMap<String,String> hashMap=new HashMap<String, String>();
                 hashMap.put("pid_start","0");
                 hashMap.put("pid_end","30");
@@ -96,134 +150,27 @@ public class FragmentTwo extends Fragment {
                 return hashMap;
             }
         };
-
         queue.add(stringRequest);
-        mlistItems = new ArrayList<Map<String,String>>();
-        for (int i = 0; i < 20; i++) {
-            Map<String,String> map = new HashMap<String,String>();
-            map.put("name", "name#" + i);
-            map.put("sex", i % 2 == 0 ? "male" : "female");
-            mlistItems.add(map);
-        }
 
-        mhandler=new Handler();
-        EcomanagproAdapter adapter=new EcomanagproAdapter(mcontext,mlistItems);
-        mecmangpro.setAdapter(adapter);
-        mecmangpro.setPullLoadEnable(true);
-        mecmangpro.setXListViewListener(new XListView.IXListViewListener() {
+        mecmangpro.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onRefresh() {
-                mhandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        onLoad();
-                    }
-                }, 2000);
-            }
-
-            @Override
-            public void onLoadMore() {
-                mhandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        onLoad();
-                    }
-                }, 2000);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("ssss","ssssss");
+                Intent intent=new Intent(mcontext, ProductDetailActivity.class);
+                intent.putExtra(AppConstants.STR_PROURL,mlistItems.get(position).get("href").toString());
+                intent.putExtra(AppConstants.STR_PROTILE,mlistItems.get(position).get("title").toString());
+                startActivity(intent);
             }
         });
 
+
+
+
         return v;
     }
-
-
     private void onLoad() {
         mecmangpro.stopRefresh();
         mecmangpro.stopLoadMore();
         mecmangpro.setRefreshTime("刚刚");
     }
-
-    public void setListViewHeightBasedOnChildren(ListView listView) {
-        // 获取ListView对应的Adapter
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
-
-        int totalHeight = 0;
-        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
-            // listAdapter.getCount()返回数据项的数目
-            View listItem = listAdapter.getView(i, null, listView);
-            // 计算子项View 的宽高
-            listItem.measure(0, 0);
-            // 统计所有子项的总高度
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        // listView.getDividerHeight()获取子项间分隔符占用的高度
-        // params.height最后得到整个ListView完整显示需要的高度
-        listView.setLayoutParams(params);
-    }
-
-    public static Map<String, Object> getMap(String jsonString)
-    {
-        JSONObject jsonObject;
-        try
-        {
-            jsonObject = new JSONObject(jsonString);   @SuppressWarnings("unchecked")
-        Iterator<String> keyIter = jsonObject.keys();
-            String key;
-            Object value;
-            Map<String, Object> valueMap = new HashMap<String, Object>();
-            while (keyIter.hasNext())
-            {
-                key = (String) keyIter.next();
-                value = jsonObject.get(key);
-                valueMap.put(key, value);
-            }
-            return valueMap;
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * 把json 转换为 ArrayList 形式
-     * @return
-     */
-    public static List<Map<String, Object>> getList(String jsonString)
-    {
-        List<Map<String, Object>> list = null;
-        try
-        {
-            JSONArray jsonArray = new JSONArray(jsonString);
-            JSONObject jsonObject;
-            list = new ArrayList<Map<String, Object>>();
-            for (int i = 0; i < jsonArray.length(); i++)
-            {
-                jsonObject = jsonArray.getJSONObject(i);
-                list.add(getMap(jsonObject.toString()));
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    public String tozhCN(String unicode) {
-        StringBuffer gbk = new StringBuffer();
-        String[] hex = unicode.split("////u");  // 分割让我想了半天！！不是"//u"，而是 "////u"
-        for (int i = 1; i < hex.length; i++) {          // 注意要从 1 开始，而不是从0开始。第一个是空。
-            int data = Integer.parseInt(hex[i], 16);  //  将16进制数转换为 10进制的数据。
-            gbk.append((char) data);  //  强制转换为char类型就是我们的中文字符了。
-        }
-        return gbk.toString();
-    }
-
     }

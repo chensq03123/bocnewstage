@@ -53,6 +53,7 @@ public class NewTradActivity extends Activity {
     private TextView comfirm;
     private Bitmap mbitmap;
     private RequestQueue queue;
+    private ArrayList<Map<String,String>> mcardlist;
     private Handler mhandler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -71,6 +72,14 @@ public class NewTradActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_newtrade);
         queue=Volley.newRequestQueue(NewTradActivity.this);
+
+        mcardlist=new ArrayList<Map<String, String>>();
+
+        if(mcardlist.size()==0){
+            HashMap<String,String> map=new HashMap<String, String>();
+            map.put("text","还没检测到银行卡");
+        }
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
@@ -79,10 +88,6 @@ public class NewTradActivity extends Activity {
             int actionBarColor = Color.rgb(0xc6, 0x28, 0x28);
             tintManager.setTintColor(actionBarColor);
         }
-
-      //  posttradeinfo("");
-
-    //    httpposthelper("");
         comfirm=(TextView)findViewById(R.id.newtradecomfirm);
         comfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,7 +153,6 @@ public class NewTradActivity extends Activity {
             },new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.i("ssssssssssss",error.toString());
                 }
             }){
                 @Override

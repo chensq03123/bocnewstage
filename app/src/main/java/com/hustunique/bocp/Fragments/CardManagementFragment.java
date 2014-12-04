@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.hustunique.bocp.Adapters.CardsExpandableListAdapter;
 import com.hustunique.bocp.R;
@@ -40,7 +41,7 @@ public class CardManagementFragment extends Fragment {
         ArrayList<Map<String,String>> defaultlist=new ArrayList<Map<String, String>>();
         HashMap<String,String> map=new HashMap<String,String>();
         defaultlist.add(map);
-        ArrayList<Map<String,String>> mlist=new ArrayList<Map<String, String>>();
+        final ArrayList<Map<String,String>> mlist=new ArrayList<Map<String, String>>();
         for (int i=0;i<8;i++){
             HashMap<String,String> map1=new HashMap<String,String>();
             mlist.add(map1);
@@ -54,6 +55,15 @@ public class CardManagementFragment extends Fragment {
         CardsExpandableListAdapter cardsadapter=new CardsExpandableListAdapter(mcontext,mlist,options);
         defaultcar.setAdapter(defaultadapter);
         cardslist.setAdapter(cardsadapter);
+
+        defaultcar.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Toast.makeText(mcontext,options[childPosition],Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
+
         return view;
     }
 }

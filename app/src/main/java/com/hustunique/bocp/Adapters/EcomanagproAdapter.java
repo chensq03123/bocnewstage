@@ -10,16 +10,17 @@ import android.widget.TextView;
 import com.hustunique.bocp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by chensq on 14-11-11.
  */
 public class EcomanagproAdapter extends BaseAdapter {
-    private ArrayList<Map<String,String>> mlist;
+    private List<Map<String,Object>> mlist;
     private Context mcontext;
 
-    public EcomanagproAdapter(Context context,ArrayList<Map<String,String>>  list){
+    public EcomanagproAdapter(Context context,List<Map<String,Object>>  list){
         this.mcontext=context;
         this.mlist=list;
     }
@@ -50,9 +51,10 @@ public class EcomanagproAdapter extends BaseAdapter {
             convertView.setTag(holder);
         }else{
             holder=(ViewHolder)convertView.getTag();
+            //holder.date=
         }
 
-
+        holder.title.setText(mlist.get(position).get("title").toString());
         return convertView;
     }
 

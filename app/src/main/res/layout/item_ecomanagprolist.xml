@@ -7,11 +7,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_vertical">
-    <com.hustunique.bocp.Utils.views.RippleView
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        ripple:rv_color="@color/transparent_red">
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,5 +32,4 @@
         android:textSize="14sp"
         android:textColor="@android:color/darker_gray"/>
         </LinearLayout>
-    </com.hustunique.bocp.Utils.views.RippleView>
 </LinearLayout>

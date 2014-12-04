@@ -111,7 +111,10 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
         CardManagementFragment asfragment=new CardManagementFragment();
         FragmentManager fragmentManager=getFragmentManager();
         FragmentTransaction transaction=fragmentManager.beginTransaction();
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                R.anim.fragment_slide_left_exit,
+                R.anim.fragment_slide_right_enter,
+                R.anim.fragment_slide_right_exit);
         transaction.replace(R.id.accsetting_fram,asfragment);
         transaction.addToBackStack(null);
         transaction.commit();

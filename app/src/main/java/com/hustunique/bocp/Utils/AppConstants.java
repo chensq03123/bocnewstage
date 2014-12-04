@@ -15,4 +15,6 @@ public class AppConstants {
     public static String UID="4";
     public static String cid="1";
     public static String tid;
+    public  final static String STR_PROTILE="STR_PROTITLE";
+    public final static String STR_PROURL="STR_PROURL";
 }

@@ -17,7 +17,7 @@
   <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="147dp"
-      android:background="@drawable/bgn_point">
+      android:background="@drawable/drawerbgn">
 
   <!--  <ImageView
         android:layout_width="52dp"

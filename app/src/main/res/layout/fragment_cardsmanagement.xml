@@ -12,7 +12,7 @@
         android:layout_height="48dp"
         android:gravity="center_vertical"
         android:layout_marginLeft="16dp"
-
+        android:textColor="#555"
         android:text="@string/defautcard"/>
     <ImageView
         android:layout_marginLeft="16dp"
@@ -23,7 +23,8 @@
     <ExpandableListView
         android:id="@+id/defaultcard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:groupIndicator="@null">
         </ExpandableListView>
     <ImageView
         android:layout_marginLeft="16dp"
@@ -36,6 +37,7 @@
         android:layout_height="48dp"
         android:gravity="center_vertical"
         android:layout_marginLeft="16dp"
+        android:textColor="#555"
         android:text="@string/othercards"/>
 
     <ImageView
@@ -47,6 +49,7 @@
     <ExpandableListView
         android:id="@+id/cardslist"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:groupIndicator="@null">
     </ExpandableListView>
 </LinearLayout>

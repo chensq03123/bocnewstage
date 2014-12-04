@@ -31,8 +31,8 @@
             android:id="@+id/addnewcard_btn"
             android:layout_gravity="right|center_vertical"
             android:layout_marginRight="16dp"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:src="@drawable/addnewcard"
             />
         </FrameLayout>
