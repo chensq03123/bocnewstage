@@ -3,6 +3,8 @@ package com.hustunique.bocp.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,7 +38,14 @@ public class FragmentOne extends Fragment {
     public FragmentOne() {
         super();
     }
+    XListView listView;
 
+    private Handler mhandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -79,10 +88,40 @@ public class FragmentOne extends Fragment {
         newrequest.add(stringRequest);
 
 
-       XListView listView = (XListView) mMainView.findViewById(R.id.traderecordlist);
+       listView = (XListView) mMainView.findViewById(R.id.traderecordlist);
         TradeRecordBaseAdapter adapter=new TradeRecordBaseAdapter(mContext,mlistItems);
         listView.setAdapter(adapter);
+
+        listView.setPullLoadEnable(true);
+        listView.setXListViewListener(new XListView.IXListViewListener() {
+            @Override
+            public void onRefresh() {
+                mhandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onLoad();
+                    }
+                }, 2000);
+            }
+
+            @Override
+            public void onLoadMore() {
+                mhandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onLoad();
+                    }
+                }, 2000);
+            }
+        });
+
         return mMainView;
+    }
+
+    private void onLoad() {
+        listView.stopRefresh();
+        listView.stopLoadMore();
+        listView.setRefreshTime("刚刚");
     }
 
 }

@@ -64,8 +64,8 @@ public class FragmentTwo extends Fragment {
             if(msg.what==2){
                adapter=new EcomanagproAdapter(mcontext,mlistItems);
                mecmangpro.setAdapter(adapter);
-                mecmangpro.setPullLoadEnable(true);
-                mecmangpro.setXListViewListener(new XListView.IXListViewListener() {
+               mecmangpro.setPullLoadEnable(true);
+               mecmangpro.setXListViewListener(new XListView.IXListViewListener() {
                     @Override
                     public void onRefresh() {
                         mhandler.postDelayed(new Runnable() {
@@ -142,7 +142,6 @@ public class FragmentTwo extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 mhandler.obtainMessage(3,null).sendToTarget();
-
                 HashMap<String,String> hashMap=new HashMap<String, String>();
                 hashMap.put("pid_start","0");
                 hashMap.put("pid_end","30");

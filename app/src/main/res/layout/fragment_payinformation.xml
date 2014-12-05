@@ -5,30 +5,23 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
     <LinearLayout
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-       <!-- <TextView
+        android:layout_marginLeft="16dp"
+        android:orientation="vertical">
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:text="学校(尾号1234)"/>
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_launcher"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="20dp"/>-->
-       <Spinner
-           android:id="@+id/pay_cardselection"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"></Spinner>
-        </LinearLayout>
-
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#555"
+            android:text="选择交易卡号"/>
+        <Spinner
+            android:id="@+id/pay_cardselection"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"></Spinner>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="72dp"
@@ -42,10 +35,12 @@
             android:textColor="#555"
             android:text="转到"/>
         <com.hustunique.bocp.Utils.views.MaterialEditText
+            android:id="@+id/pay_account"
             android:layout_marginRight="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:baseColor="@android:color/darker_gray"
+            android:textColor="#444"
+            app:baseColor="#555"
             android:hint="转入账户"/>
         </LinearLayout>
     <LinearLayout
@@ -61,10 +56,12 @@
             android:textColor="#555"
             android:text="转账金额"/>
         <com.hustunique.bocp.Utils.views.MaterialEditText
+            android:id="@+id/pay_amount"
             android:layout_marginRight="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:baseColor="@android:color/darker_gray"
+            android:textColor="#444"
+            app:baseColor="#555"
             android:hint="转入金额"/>
     </LinearLayout>
     <LinearLayout
@@ -74,12 +71,14 @@
         android:layout_marginLeft="16dp"
         android:orientation="vertical">
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:textColor="#555"
             android:text="备注"/>
         <com.hustunique.bocp.Utils.views.MaterialEditText
+            android:id="@+id/pay_tag"
             android:layout_marginRight="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

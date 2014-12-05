@@ -90,6 +90,7 @@ public class CardsExpandableListAdapter extends BaseExpandableListAdapter {
         }else
             holder=(ViewHolder)convertView.getTag();
         holder.carsubname.setText(mparentlist.get(groupPosition).get("alias").toString());
+        holder.moneyremain.setText(mparentlist.get(groupPosition).get("remain").toString());
         return convertView;
     }
 

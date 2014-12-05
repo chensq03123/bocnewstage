@@ -49,6 +49,7 @@
         ripple:rv_color="@android:color/holo_blue_bright"
         android:layout_alignParentRight="true">
     <TextView
+        android:id="@+id/pay_comfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/confirm"

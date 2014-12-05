@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -79,6 +80,7 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
     private RequestQueue queue;
     private SharedPreferences sharedPreferences;
     private List<Map<String,Object>> mcardlist;
+    private ProgressDialog progDlg=null;
 
     private Handler mhandler=new Handler(){
         @Override
@@ -91,8 +93,26 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
                     for(int i=0;i<mcardlist.size();i++){
                         Addnewcard(mcardlist.get(i));
                     }
-                    sharedPreferences.edit().putBoolean("BOCP_CARD_TAG",false);
+                    sharedPreferences.edit().putBoolean("BOCP_CARD_TAG",false).commit();
                 }
+
+                for(int i=0;i<mcardlist.size();i++){
+                    Creditbalsearch(AppConstants.username,mcardlist.get(i).get("lmtamt").toString(),i);
+                }
+
+
+            }else if(msg.what==2){
+                mcardlist.get(msg.arg1).put("remain",String.valueOf(Float.parseFloat(msg.obj.toString()) / 100f));
+                Log.i("balanceresult",mcardlist.get(msg.arg1).toString());
+            }else if(msg.what==3){
+                if(progDlg == null || !progDlg.isShowing()){
+                    progDlg = new ProgressDialog(AccountSettingActivity.this);
+                    progDlg.setMessage("正在获取银行卡，请稍候...");
+                }
+                progDlg.show();
+            }else if(msg.what==4){
+               if(progDlg!=null&&progDlg.isShowing())
+                   progDlg.dismiss();
             }
         }
     };
@@ -360,10 +380,10 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
         //RequestQueue requestQueue=Volley.newRequestQueue(AccountSettingActivity.this);
         HashMap<String,String> map=new HashMap<String, String>();
         map.put("userid","cary32_test_391");
-        map.put("accno","");
-        map.put("alias","");
-        map.put("trntyp","");
-        map.put("ifncal","");
+        //map.put("accno","");
+        //map.put("alias","");
+        //map.put("trntyp","");
+        //map.put("ifncal","");
         map.put("pageno","1");
         //  map.put("limitamt","2014091500000615");
         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST,Constants.httpPrefix+"/debit/appfindusrinfo",new JSONObject(map),new Response.Listener<JSONObject>() {
@@ -371,8 +391,8 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
             public void onResponse(JSONObject response) {
                 try {
                    // Log.i("sssstrade",response.toString());
-                     mcardlist=JSON2LIST.getList(response.getString("saplist"));
-                    mhandler.obtainMessage(1,null).sendToTarget();
+                        mcardlist=JSON2LIST.getList(response.getString("saplist"));
+                        mhandler.obtainMessage(1,null).sendToTarget();
                     Log.i("sssstrade",mcardlist.get(0).toString());
                    // Toast.makeText(AccountSettingActivity.this,response.toString(),Toast.LENGTH_LONG).show();
                 }catch (Exception e){}
@@ -386,35 +406,8 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-                map.put("clentid", AppInfo.getAppKeyValue());
-
-                Oauth2AccessToken accessToken = AccessTokenKeeper
-                        .readAccessToken(BOCOPPayApi.getContext());
-                String mUserId = accessToken.getUserId();
-                String token = accessToken.getToken();
-//		String token = "87a3ff45-24e0-4758-b7d9-c72e5283569d";
-                if (!StringUtil.isNullOrEmpty(mUserId)) {
-                    map.put("userid", mUserId);
-                }
-
-                if (!StringUtil.isNullOrEmpty(token)) {
-                    map.put("acton", token);
-                }
-
-                map.put("chnflg", "1");
-
-                SimpleDateFormat format = new SimpleDateFormat("yyyyMMDD");
-                // 获取当前时间
-                String nowData = format.format(new Date(System.currentTimeMillis()));
-                map.put("trandt", nowData);
-
-                SimpleDateFormat formatTime = new SimpleDateFormat("HHmmss");
-                // 获取当前时间
-                String nowTime = formatTime
-                        .format(new Date(System.currentTimeMillis()));
-                map.put("trantm", nowTime);
-                return map;
+                mhandler.obtainMessage(3,null).sendToTarget();
+                return BaseService.genPublicAsrHeader(AccountSettingActivity.this);
             }
         };
 
@@ -424,5 +417,36 @@ public class AccountSettingActivity extends Activity implements View.OnClickList
     public List<Map<String,Object>> getcardlist(){
         return mcardlist;
     }
+
+    private void Creditbalsearch(String uid,String limitamt,int position){
+        final int po=position;
+        HashMap<String,String> map=new HashMap<String, String>();
+        map.put("userid",uid);
+        map.put("lmtamt",limitamt);
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST, Constants.httpPrefix+ "/app/creditbalsearch",new JSONObject(map),new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Log.i("balancesearch",response.toString());
+                    mhandler.obtainMessage(2,po,0,response.get("balance").toString()).sendToTarget();
+                    if(po==mcardlist.size()-1)
+                        mhandler.obtainMessage(4,null).sendToTarget();
+                }catch (Exception e){}
+
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return BaseService.genPublicAsrHeader(AccountSettingActivity.this);
+            }
+        };
+        queue.add(jsonObjectRequest);
+    }
+
 
 }

@@ -60,6 +60,7 @@
                 android:textColor="#555"
                 android:text="选择交易卡号"/>
     <Spinner
+        android:id="@+id/newtrade_cardspinner"
         android:layout_width="match_parent"
         android:layout_height="64dp"></Spinner>
         </LinearLayout>

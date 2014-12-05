@@ -2,10 +2,12 @@ package com.hustunique.bocp.Activities;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.util.Log;
 import android.util.Property;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -96,7 +99,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
     private String uid=null;
     private DrawerLayout mDrawerLayout;
     private MaterialMenuView materialMenuView;
-    private int              materialButtonState;
+    private int  materialButtonState;
     private MaterialMenu materialIcon;
     private DrawerLayout     drawerLayout;
     private boolean          direction;
@@ -130,6 +133,15 @@ public class MainActivityo extends IndicatorFragmentActivity {
             tintManager.setTintColor(actionBarColor);
         }
 
+        SharedPreferences sharedPreferences=getSharedPreferences("BOCP_APP",MODE_PRIVATE);
+        boolean isfirstrun=sharedPreferences.getBoolean("BOCP_FIRSTRUN",true);
+        if(isfirstrun){
+            AlertDialog.Builder bd=new AlertDialog.Builder(MainActivityo.this);
+            View v= LayoutInflater.from(MainActivityo.this).inflate(R.layout.dialog_greeting,null);
+            bd.setView(v);
+            bd.create().show();
+            sharedPreferences.edit().putBoolean("BOCP_FIRSTRUN",false).commit();
+        }
 
         {
             FrameLayout frameLayout = (FrameLayout) findViewById(R.id.btn_options);
@@ -330,7 +342,17 @@ public class MainActivityo extends IndicatorFragmentActivity {
         logout=(LinearLayout)findViewById(R.id.logout_layout);
         aboutus=(LinearLayout)findViewById(R.id.aboutus);
         feedback=(LinearLayout)findViewById(R.id.feedback);
+        aboutus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.closeDrawer(Gravity.START);
+                AlertDialog.Builder bd=new AlertDialog.Builder(MainActivityo.this);
+                View view= LayoutInflater.from(MainActivityo.this).inflate(R.layout.dialog_greeting,null);
+                bd.setView(view);
+                bd.create().show();
 
+            }
+        });
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -414,69 +436,7 @@ public class MainActivityo extends IndicatorFragmentActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public void cardtransfer(){
-        RequestQueue requestQueue=Volley.newRequestQueue(MainActivityo.this);
-        HashMap<String,String> map=new HashMap<String, String>();
-        map.put("userid","cary32_test_391");
-        // map.put("lmtamtout",)
-        map.put("lmtamtout","2014092200000923");
-        map.put("cardnumin","6217870700000000001");
-        map.put("amount","200");
-        map.put("currency","001");
-        map.put("username","zhangsan");
-        //post("http://openapi.boc.cn/bocop/base/asr/cardtransfer",BaseService.genPublicAsrHeader(MainActivityo.this),map,);
-        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST,Constants.httpPrefix + "/base/asr/cardtransfer",new JSONObject(map),new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    Log.i("sssstttttttt",response.toString());
-                    //Toast.makeText(MainActivityo.this,response.getString("balance"),Toast.LENGTH_LONG).show();
-                }catch (Exception e){}
 
-            }
-        },new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("respon",error.toString());
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return BaseService.genPublicAsrHeader(MainActivityo.this);
-            }
-        };
-
-        requestQueue.add(jsonObjectRequest);
-        ContactTransCriteria criteria=new ContactTransCriteria();
-        criteria.setUserid("cary32_test_391");
-        criteria.setAmount("300");
-        criteria.setCardnumin("6217870700000000001");
-        criteria.setCurrency("001");
-        criteria.setUsername("zhangsan");
-        criteria.setLmtamtout("2014092200000923");
-            /*commoncardtransfer(MainActivityo.this, criteria, new ResponseListener() {
-                @Override
-                public void onComplete(ResponseBean responseBean) {
-                    Log.i("responsetrans",responseBean.getRtnmsg());
-                }
-
-                @Override
-                public void onException(Exception e) {
-
-                }
-
-                @Override
-                public void onError(Error error) {
-
-                }
-
-                @Override
-                public void onCancel() {
-
-                }
-            });
-                */
-    }
 
 
     public void logoutApp() {

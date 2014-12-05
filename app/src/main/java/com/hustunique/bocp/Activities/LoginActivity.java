@@ -32,11 +32,14 @@ import com.boc.bocop.sdk.BOCOPPayApi;
 import com.boc.bocop.sdk.api.bean.ResponseBean;
 import com.boc.bocop.sdk.api.bean.fund.Fund900Response;
 import com.boc.bocop.sdk.api.bean.oauth.BOCOPOAuthInfo;
+import com.boc.bocop.sdk.api.bean.oauth.OAuthResponseInfo;
 import com.boc.bocop.sdk.api.event.ResponseListener;
 import com.boc.bocop.sdk.common.Constants;
 import com.boc.bocop.sdk.http.AsyncHttpClient;
 import com.boc.bocop.sdk.http.JsonResponseListenerAdapterHandler;
 import com.boc.bocop.sdk.service.BaseService;
+import com.boc.bocop.sdk.service.impl.OAuthService;
+import com.boc.bocop.sdk.util.AccessTokenKeeper;
 import com.hustunique.bocp.R;
 import com.hustunique.bocp.Utils.AppConstants;
 import com.hustunique.bocp.Utils.BalanceCriteria;
@@ -73,17 +76,21 @@ public class LoginActivity extends Activity {
             if(msg.what==1){
                Toast.makeText(LoginActivity.this,msg.obj.toString(),Toast.LENGTH_LONG).show();
                 final String uid=msg.obj.toString();
-                Intent intent=new Intent(LoginActivity.this,MainActivityo.class);
-                intent.putExtra("UID",uid);
-                startActivity(intent);
+                AppConstants.username=uid;
+
+                {
+                    AccessTokenKeeper.keepAccessToken(LoginActivity.this, OAuthService.getOAuthToken());
+                }
+
                 RequestQueue queue= Volley.newRequestQueue(LoginActivity.this);
                 StringRequest stringRequest=new StringRequest(Request.Method.POST,"http://104.160.39.34:8000/requestuid/",new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(LoginActivity.this,response.toString(),Toast.LENGTH_LONG).show();
+                       // Toast.makeText(LoginActivity.this,response.toString(),Toast.LENGTH_LONG).show();
                         Intent intent=new Intent(LoginActivity.this,MainActivityo.class);
                         intent.putExtra("UID",uid);
                         startActivity(intent);
+                        LoginActivity.this.finish();
                     }
                 },new Response.ErrorListener() {
                     @Override
@@ -98,7 +105,7 @@ public class LoginActivity extends Activity {
                         return params;
                     }
                 };
-                //queue.add(stringRequest);
+                queue.add(stringRequest);
 
             }else if(msg.what==0){
                 Toast.makeText(LoginActivity.this,msg.obj.toString(),Toast.LENGTH_LONG).show();

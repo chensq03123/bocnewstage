@@ -5,20 +5,51 @@
     android:paddingRight="@dimen/tradeitem_padding"
     android:paddingTop="8dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-   <com.hustunique.bocp.Utils.views.makeramen.RoundedImageView
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:background="@drawable/bgnone"
-       android:scaleType="fitCenter"
-       app:riv_corner_radius="30dip"
-       app:riv_border_width="2dip"
-       app:riv_border_color="#333333"
-       app:riv_mutate_background="true"
-       app:riv_tile_mode="repeat"
-       app:riv_oval="true"
-       />
+    android:layout_height="140dp"
+    android:orientation="vertical">
+    <LinearLayout
+        android:background="#fff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="140dp"
+        android:background="@drawable/chbgn"/>
+    <LinearLayout
+        android:layout_marginLeft="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="劳动者的丰收－幸运儿系列首饰"
+            android:textSize="20sp"/>
+        <ImageView
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:background="@android:color/darker_gray"/>
+        <TextView
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="已筹资 20% ￥3344.00"
+            android:textColor="#bbb"/>
+        <TextView
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#bbb"
+            android:layout_marginBottom="8dp"
+            android:text="剩余29天"/>
+        </LinearLayout></LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/gradientshap"
+        android:layout_marginLeft="2dp"
+        />
 </LinearLayout>

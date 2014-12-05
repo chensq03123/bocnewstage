@@ -34,6 +34,7 @@
             android:textSize="14sp"
             android:text="转到"/>
         <TextView
+            android:id="@+id/comfirm_accno"
             android:layout_marginTop="8dp"
             android:textSize="16sp"
             android:layout_width="match_parent"
@@ -53,6 +54,7 @@
             android:textSize="14sp"
             android:text="收款人姓名"/>
         <TextView
+            android:id="@+id/comfirm_name"
             android:layout_marginTop="6dp"
             android:textSize="16sp"
             android:layout_width="match_parent"
@@ -73,6 +75,7 @@
             android:textSize="14sp"
             android:text="转账金额"/>
         <TextView
+            android:id="@+id/comfirm_cost"
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

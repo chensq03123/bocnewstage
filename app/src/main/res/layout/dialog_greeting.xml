@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/actionbar_color"
+        android:gravity="left"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/white"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginLeft="20dp"
+            android:textSize="@dimen/dialog_textsize"
+            android:text="提示"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="尊敬的客户：\n
+        您好！由于开发时间拮据，现提供一下提示：\n
+         0.转账支付请用测试账号cary32_test_391;\n
+        １.由于签约新卡接口环境不稳定，现暂时不能签约新卡;\n
+        2.因接口权限有限，支付过程由测试账号完成;\n
+        3.众筹功能暂处于研发测试阶段，敬请期待！\n\n
+        \t使用愉快！
+        "
+       />
+</LinearLayout>

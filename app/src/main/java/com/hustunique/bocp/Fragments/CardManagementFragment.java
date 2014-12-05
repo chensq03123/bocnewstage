@@ -10,9 +10,21 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.boc.bocop.sdk.common.Constants;
+import com.boc.bocop.sdk.service.BaseService;
 import com.hustunique.bocp.Activities.AccountSettingActivity;
 import com.hustunique.bocp.Adapters.CardsExpandableListAdapter;
 import com.hustunique.bocp.R;
+import com.hustunique.bocp.Utils.AppConstants;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +36,7 @@ import java.util.Map;
  */
 public class CardManagementFragment extends Fragment {
 
+    private RequestQueue queue;
     private Context mcontext;
     private final String[] options={"删除卡片","编辑卡片","交易记录","查询余额"};
     List<Map<String,Object>> mlist;
@@ -50,6 +63,8 @@ public class CardManagementFragment extends Fragment {
          //   HashMap<String,String> map1=new HashMap<String,String>();
            // mlist.add(map1);
         //}
+
+        queue= Volley.newRequestQueue(mcontext);
         defaultlist.add(((AccountSettingActivity)getActivity()).getcardlist().get(0));//()(((AccountSettingActivity)getActivity()).getcardlist().get(0));
         mlist=((AccountSettingActivity)getActivity()).getcardlist();
         View view=inflater.inflate(R.layout.fragment_cardsmanagement,null);
@@ -70,4 +85,7 @@ public class CardManagementFragment extends Fragment {
 
         return view;
     }
+
+
+
 }
